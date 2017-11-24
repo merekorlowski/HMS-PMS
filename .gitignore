@@ -1,5 +1,3 @@
-/bin/
-/src/
-.classpath
-.project
-
+.vscode
+.editorconfig
+.db_credentials
