@@ -49,36 +49,17 @@ router.put('/prescription', (req, res) => {
 
     let queryText = `
       UPDATE 
-      SPORTSDB.Employe
+      HMS-PMS.Prescription
       SET
-        prenom = '${req.body.prenom}',
-        nom = '${req.body.nom}',
-        role = '${req.body.role}'
-      WHERE idemploye = '${req.body.idemploye}'
+        unitsByDay = '${req.body.unitsByDay}',
+        numOfAdministrationPerDay = '${req.body.numOfAdministrationPerDay}',
+        methodOfAdministration = '${req.body.methodOfAdministration}',
+        startDate = '${req.body.startDate}',
+        finishDate = '${req.body.finishDate}',
+        numOfAdministrationPerTime = '${req.body.numOfAdministrationPerTime}',
+      WHERE prescriptionID = '${req.body.prescriptionID}'
       ;
     `;
-
-    if (req.body.role === 'Arbitre') {
-      queryText += `
-        UPDATE 
-        SPORTSDB.ArbitreSport
-        SET
-          nbrannees = '${req.body.nbrannees}'
-        WHERE idemploye = '${req.body.idemploye}' AND '${req.body.idsport}' = '${req.body.idsport}'
-        ;
-      `;
-    } else if (req.body.role === 'Gestionnaire') {
-      queryText += `
-        UPDATE 
-        SPORTSDB.Gestionnaire
-        SET
-          numtel = '${req.body.numtel}',
-          courriel = '${req.body.courriel}'
-        WHERE idemploye = '${req.body.idemploye}'
-        ;
-      `;
-    }
-
     const query = client.query(queryText);
 
     // After all data is returned, close connection and return results
@@ -92,7 +73,43 @@ router.put('/prescription', (req, res) => {
 
 
 router.post('/prescription', (req, res) => {
-  //post to db
-  return null //added prescription message
-})
+
+  pg.connect(connectionString, (err, client, done) => {
+
+    // Handle connection errors
+    if(err) {
+      done();
+      console.log(err);
+      return res.status(500).json({success: false, data: err});
+    }
+
+    let queryText = `
+      INSERT 
+      INTO HMS-PMS.Prescription
+      (unitsByDay, 
+      numOfAdministrationPerDay, 
+      methodOfAdministration, 
+      startDate, 
+      finishDate,
+      numOfAdministrationPerTime)
+      VALUES (
+        '${req.body.unitsByDay}',
+        '${req.body.numOfAdministrationPerDay}',
+        '${req.body.methodOfAdministration}',
+        '${req.body.startDate}',
+        '${req.body.finishDate}',
+        '${req.body.numOfAdministrationPerTime}'
+      );
+    `;
+
+    const query = client.query(queryText);
+
+    // After all data is returned, close connection and return results
+    query.on('end', () => {
+      done();
+      return res.json();
+    });
+
+  });
+});
 module.exports = router
