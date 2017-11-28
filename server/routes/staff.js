@@ -12,7 +12,7 @@ const pg = require('pg');
 
  router.post('/staff', (req, res, next) => {
 
- 	pg.connect(connectionString, (err, client, done) => {
+	pg.connect(connectionString, (err, client, done) => {
 
 		// Handle connection errors
 		if(err) {
@@ -28,7 +28,7 @@ const pg = require('pg');
 		'${req.body.userId}',
 		'${req.body.email}',
 		'${req.body.password}',
-		'${req.body.qualifications}'
+		'${req.body.qualifications}',
 		'${req.body.workExperience}'
 		);
 		`;
@@ -65,7 +65,7 @@ const pg = require('pg');
 			VALUES (
 			'${req.body.userId}',
 			'${req.body.phoneNumber}',
-			'${req.body.bipperExtension}',
+			'${req.body.bipperExtension}'
 			);
 			`;
 		}
@@ -129,34 +129,33 @@ const pg = require('pg');
  /**
  * Get information of division's charge nurse
  */
-router.get('/chargeNurse', (req, res, next) => {
+ router.get('/chargeNurse', (req, res, next) => {
 
-  const results = [];
+	const results = [];
 
-  pg.connect(connectionString, (err, client, done) => {
+	pg.connect(connectionString, (err, client, done) => {
 
-    // Handle connection errors
-    if(err) {
-      done();
-      console.log(err);
-      return res.status(500).json({success: false, data: err});
-    }
+		// Handle connection errors
+		if(err) {
+			done();
+			console.log(err);
+			return res.status(500).json({success: false, data: err});
+		}
 
-    const query = client.query(`
-     QUERY F3.4
-    `);
+		const query = client.query(`
+			QUERY F3.4
+			`);
 
-    query.on('row', row => {
-      results.push(row);
-    });
+		query.on('row', row => {
+			results.push(row);
+		});
 
-    // After all data is returned, close connection and return results
-    query.on('end', () => {
-      done();
-      return res.json(results);
-    });
-
-  });
+		// After all data is returned, close connection and return results
+		query.on('end', () => {
+			done();
+			return res.json(results);
+		});
+	});
 });
 
  module.exports = router
