@@ -9,6 +9,7 @@ const prescriptions = require('./routes/prescriptions')
 const session = require('./routes/session')
 const users = require('./routes/users')
 const staff = require('./routes/staff')
+const patient = require('./routes/patient')
 
 const app = express()
 
@@ -24,6 +25,7 @@ app.use('/prescriptions', prescriptions)
 app.use('/session', session)
 app.use('/users', users)
 app.use('/staff', staff)
+app.use('/patient', patient)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

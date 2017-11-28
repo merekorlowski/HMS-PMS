@@ -1,13 +1,14 @@
 /**
- * Charger les dépendances
+ * Load the dependancies
  */
 const express = require('express')
 const router = express.Router()
 const pg = require('pg');
 
 
+//PATRICK check les foreign keys for each insert...
 /**
- * Ajouter un staff
+ * Add a Staff
  */
 
  router.post('/staff', (req, res, next) => {
@@ -21,6 +22,7 @@ const pg = require('pg');
 			return res.status(500).json({success: false, data: err});
 		}
 
+		//Add a Staff
 		let queryText = `
 		INSERT 
 		INTO HMS-PMS.Staff
@@ -33,7 +35,7 @@ const pg = require('pg');
 		);
 		`;
 
-		// Ajouter un LocalDoctor
+		// Add a LocalDoctor
 		if (req.body.role === 'LocalDoctor') {
 			queryText += `
 			INSERT 
@@ -45,7 +47,7 @@ const pg = require('pg');
 			`;
 		}
 
-		// Ajouter un Nurse
+		// Add a Nurse
 		else if (req.body.role === 'Nurse') {
 			queryText += `
 			INSERT 
@@ -57,7 +59,7 @@ const pg = require('pg');
 			`;
 		}
 
-		// Ajouter un ChargeNurse
+		// Add a ChargeNurse
 		else if (req.body.role === 'ChargeNurse') {
 			queryText += `
 			INSERT 
@@ -70,7 +72,7 @@ const pg = require('pg');
 			`;
 		}
 
-		// Ajouter un Director
+		// Add a Director
 		else if (req.body.role === 'Director') {
 			queryText += `
 			INSERT 
@@ -81,7 +83,7 @@ const pg = require('pg');
 			`;
 		}
 
-		// Ajouter un NonMedical
+		// Add a NonMedical
 		else if (req.body.role === 'NonMedical') {
 			queryText += `
 			INSERT 
@@ -92,7 +94,7 @@ const pg = require('pg');
 			`;
 		}
 
-		// Ajouter un Auxiliary
+		// Add a Auxiliary
 		else if (req.body.role === 'Auxiliary') {
 			queryText += `
 			INSERT 
@@ -104,7 +106,7 @@ const pg = require('pg');
 			`;
 		}
 
-		// Ajouter un PersonnelOfficer
+		// Add a PersonnelOfficer
 		else if (req.body.role === 'PersonnelOfficer') {
 			queryText += `
 			INSERT 
