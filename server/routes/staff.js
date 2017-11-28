@@ -1,8 +1,8 @@
 /**
  * Load the dependancies
  */
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 const pg = require('pg');
 
 
@@ -160,4 +160,4 @@ const pg = require('pg');
 	});
 });
 
- module.exports = router
+ module.exports = router;

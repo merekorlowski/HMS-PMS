@@ -1,8 +1,8 @@
 /**
  * Load the dependancies
  */
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 const pg = require('pg');
 
 /**
@@ -90,29 +90,28 @@ router.get('/medicalSupply', (req, res, next) => {
 
 	pg.connect(connectionString, (err, client, done) => {
 
-	// Handle connection errors
-	if(err) {
-		done();
-		console.log(err);
-		return res.status(500).json({success: false, data: err});
-	}
+		// Handle connection errors
+		if(err) {
+			done();
+			console.log(err);
+			return res.status(500).json({success: false, data: err});
+		}
 
-	const query = client.query(`
-		SELECT * 
-		FROM HMS-PMS.'${req.body.type}';
-		`);
-	
-	query.on('row', row => {
-		results.push(row);
+		const query = client.query(`
+			SELECT *
+			FROM HMS-PMS.'${req.body.type}';
+			`);
+		query.on('row', row => {
+			results.push(row);
+		});
+
+		// After all data is returned, close connection and return results
+		query.on('end', () => {
+			done();
+			return res.json(results);
+		});
+
 	});
-
-	// After all data is returned, close connection and return results
-	query.on('end', () => {
-		done();
-		return res.json(results);
-	});
-
-});
 });
 
 /**
@@ -163,4 +162,4 @@ router.delete('/medicalSupply', (req, res, next) => {
 	});
 });
 
- module.exports = router
+ module.exports = router;

@@ -1,8 +1,8 @@
 /**
  * Load the dependancies
  */
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 const pg = require('pg');
 
 /**
@@ -225,4 +225,4 @@ router.post('/patient/division/request', (req, res, next) => {
 	});
 });
 
- module.exports = router
+ module.exports = router;
