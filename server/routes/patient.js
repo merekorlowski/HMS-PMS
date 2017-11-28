@@ -48,7 +48,7 @@ router.post('/patient', (req, res, next) => {
 			'${req.body.dateOfBirth}',
 			'${req.body.gender}',
 			'${req.body.maritalStatus}',
-			'${req.body.nextOfKinID}',
+			'${req.body.nextOfKinID}'
 			);
 			`;
 
