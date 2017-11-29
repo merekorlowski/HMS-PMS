@@ -1,0 +1,81 @@
+#loginForm {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  margin-left: -250px;
+  margin-top: -175px;
+  width: 500px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 10px black;
+  height: 350px;
+  background-color: #f2f2f2;
+}
+
+#loginTitle {
+  margin: 0 auto;
+  text-align: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid #000000;
+  background-color: #b42929;
+  padding: 25px 10px;
+  color: #ffffff;
+  text-shadow: 1px 1px 2px #000000;
+}
+
+#loginContent {
+  padding: 30px;
+}
+
+#loginContent div {
+  width: 400px;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 5px;
+  font-size: 16px;
+  border: 1px solid #e6e6e6;
+  box-shadow: 1px 1px 2px #000000;
+  background-color: #ffffff;
+}
+
+#loginContent div input {
+  width: 325px;
+  margin: 0;
+  height: 100%;
+  border: none;
+}
+
+#loginContent div span {
+  width: 50px;
+  height: 100%;
+  background-color: #ffffff;
+}
+
+#loginContent i {
+  vertical-align: middle;
+  color: #0000007e;
+}
+
+#loginForm button {
+  margin-top: 30px;
+  margin-right: 20px;
+  float: right;
+  border: none;
+  box-shadow: 1px 1px 5px #000000;
+  background-color: #b42929;
+  color: #ffffff;
+  padding: 15px 25px;
+  text-shadow: 1px 1px 2px black;
+}
+
+.shadow-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  background-color: rgba(0, 0, 0, .8);
+}

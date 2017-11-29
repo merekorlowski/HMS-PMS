@@ -1,0 +1,14 @@
+<template>
+  <form class="input-form" submit.delegate="consult()">
+      <h1 class="page-title">Consult Patient File</h1>
+      <div class="form-content">
+        <div>
+          <input type="text" placeholder="Patient ID" value.bind="patientId" /> 
+          <button type="submit">Consult File</button> 
+        </div>
+        <hr/>
+        <div if.bind="patient" class="sub-section">
+
+        </div>
+      </div>
+</template>

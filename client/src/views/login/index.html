@@ -1,0 +1,12 @@
+<template>
+  <require from="./styles.css"></require>
+  <div class="shadow-layer"></div>
+  <form id="loginForm" submit.trigger="login()">
+    <h3 id="loginTitle">Patient Management System (PMS)</h3>
+    <div id="loginContent">
+      <div><input type="text" placeholder="Username" value.bind="username"/><span><i class="material-icons">person</i></span></div>
+      <div><input type="password" placeholder="Password" value.bind="password"/><span><i class="material-icons">email</i></span></div>
+      <button type="submit">Login</button>
+    </div>
+  </form>
+</template>
