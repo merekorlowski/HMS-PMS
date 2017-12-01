@@ -1,3 +1,4 @@
 .vscode
 .editorconfig
 .db_credentials
+node_modules/*

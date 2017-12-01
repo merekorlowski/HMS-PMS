@@ -1,2 +1,7 @@
-# HMS-PMS
-The Wellmeadows Hospital  Management System (HMS) and Patient Management System (PMS).
+# HMS-PMS SERVER
+
+## Install dependencies
+* run `npm install`
+
+## Start server
+* run `npm start` and go to http://localhost:3000
