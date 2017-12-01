@@ -7,13 +7,10 @@ export class User {
         this.firstName = ''
         this.lastName = ''
         this.email = ''
+        this.role = ''
     }
 
     get passwordsMatch() {
         return password == cpassword && password != ''
-    }
-
-    validate() {
-
     }
 }

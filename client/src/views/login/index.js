@@ -13,8 +13,11 @@ export class Login {
 
   login() {
     this.session.login(this.username, this.password).then(() => {
-      this.router.navigate('')
+      this.router.navigate('PMS')
     })
   }
 
+  register() {
+    this.router.navigate('register')
+  }
 }

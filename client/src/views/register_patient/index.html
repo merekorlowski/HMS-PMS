@@ -1,73 +1,98 @@
 <template>
-  <form class="input-form" submit.delegate="register()">
+  <form class="main-section" submit.trigger="register()">
       <h1 class="page-title">Register Patient</h1>
       <div class="form-content">
-        <div><label>Id: </label><input type="text" value.bind="patient.id" placeholder="11111"/></div>
-        <div><label>First Name: </label><input type="text" value.bind="patient.firstName" placeholder="John"/></div>
-        <div><label>Last Name: </label><input type="text" value.bind="patient.lastName" placeholder="Doe"/></div>
-        <div><label>Telephone Number: </label><input type="telephone" value.bind="patient.telephone" placeholder="(111) 111-1111"/></div>
-        <div class="sub-section">
-            <h2>Address</h2>
-            <hr/>
-            <div><label>Number: </label><input type="text" placeholder="111" value.bind="patient.address.number"/></div>
-            <div><label>Street: </label><input type="text" placeholder="Lees" value.bind="patient.address.street"/></div>
-            <div><label>City: </label><input type="text" placeholder="Ottawa" value.bind="patient.address.city"/></div>
-            <div><label>Postal Code: </label><input type="text" placeholder="K1N 4F2" value.bind="patient.address.postalCode"/></div>
+        <h2>Patient</h2>
+        <hr/>
+        <div class="form-row">
+          <label>Government Insurance Number:
+            <input type="text" value.bind="patient.id & validate" placeholder="11111"/>
+          </label>
+        </div>
+        <div class="form-row">
+          <label>First Name:
+            <input type="text" value.bind="patient.firstName & validate" placeholder="John"/>
+          </label>
+          <label>Last Name:
+            <input type="text" value.bind="patient.lastName & validate" placeholder="Doe"/>
+          </label>
+        </div>
+        <div class="form-row">
+          <label>Telephone Number:
+            <input type="telephone" class="input-short" value.bind="patient.telephone & validate" placeholder="(111) 111-1111"/>
+          </label>
+        </div>
+        <div class="form-row">
+          <label>Address Line 1:
+              <input type="text" class="input-long" placeholder="Number, Street, Unit" value.bind="patient.address.line & validate"/>
+          </label>
+        </div>
+        <div class="form-row">
+          <label>City:
+            <input type="text" placeholder="Ottawa" value.bind="patient.address.city & validate"/>
+          </label>
+          <label>Postal Code:
+            <input type="text" placeholder="K1N4F2" value.bind="patient.address.postalCode & validate"/>
+          </label>
+        </div>
+        <label>Date Of Birth:
+          <input type="text" placeholder="YYYY-MM-DD" value.bind="patient.dateOfBirth & validate"/>
+        </label>
+        <div class="form-row">
+          <label>Gender:
+            <select value.bind="patient.gender">
+              <option value="M">Male</option>
+              <option value="F">Female</option>
+              <option value="O">Other</option>
+              <option value="PNS">Prefer not to specify</option>
+            </select>
+          </label>
+          <label>Marital Status:
+            <select value.bind="patient.maritalStatus">
+              <option value="S">Single</option>
+              <option value="M">Married</option>
+              <option value="D">Divorced</option>  
+            </select>
+          </label>
+        </div>
+        <label>External Doctor ID:
+          <input value.bind="patient.externalDoctorId & validate" placeholder="1111"/>
+        </label>
+        <h2>Next Of Kin</h2>
+        <hr/>
+        <div class="form-row">
+          <label>First Name:
+            <input type="text" placeholder="John" value.bind="patient.nextOfKin.firstName & validate"/>
+          </label>
+          <label>Last Name:
+            <input type="text" placeholder="Doe" value.bind="patient.nextOfKin.lastName & validate"/>
+          </label>
+        </div>
+        <div class="form-row">
+          <label>Relationship to Patient:
+            <input type="text" placeholder="Father" value.bind="patient.nextOfKin.relationshipToPatient & validate"/>
+          </label>
+        </div>
+        <div class="form-row">
+          <label>Address Line 1:
+              <input type="text" class="input-long" placeholder="Number, Street, Unit" value.bind="patient.address.line & validate"/>
+          </label>
+        </div>
+        <div class="form-row">
+          <label>City:
+            <input type="text" placeholder="Ottawa" value.bind="patient.address.city & validate"/>
+          </label>
+          <label>Postal Code:
+            <input type="text" placeholder="K1N4F2" value.bind="patient.address.postalCode & validate"/>
+          </label>
         </div>
         <div>
-          <label>Date Of Birth: </label>
-          <input type="text" placeholder="YYYY-MM-DD" value.bind="patient.dateOfBirth"/>
-        </div>
-        <div><label>Gender: </label>
-          <select value.bind="patient.gender">
-            <option value="M">Male</option>
-            <option value="F">Female</option>
-            <option value="O">Other</option>
-            <option value="PNS">Prefer not to specify</option>
-          </select>
-        </div>     
-        <div>
-          <label>Marital Status: </label>
-          <select value.bind="patient.maritalStatus">
-            <option value="S">Single</option>
-            <option value="M">Married</option>
-            <option value="D">Divorced</option>  
-          </select>
-        </div>
-        <div>
-          <label>External Doctor ID: </label>
-          <input value.bind="patient.externalDoctorId" placeholder="1111"/>
-        </div>
-        <div class="sub-section">
-          <h2>Next Of Kin</h2>
-          <hr/>
-          <div>
-            <label>First Name: </label>
-            <input type="text" placeholder="John" value.bind="patient.nextOfKin.firstName"/>
-          </div>
-          <div>
-            <label>Last Name: </label>
-            <input type="text" placeholder="Doe" value.bind="patient.nextOfKin.lastName"/>
-          </div>
-          <div>
-            <label>Relationship to Patient: </label>
-            <input type="text" placeholder="Father" value.bind="patient.nextOfKin.relationshipToPatient"/>
-          </div>
-          <div class="sub-section">
-              <h3>Address</h3>
-              <hr/>
-              <div><label>Number: </label><input type="text" placeholder="111" value.bind="patient.nextOfKin.address.number"/></div>
-              <div><label>Street: </label><input type="text" placeholder="Lees" value.bind="patient.nextOfKin.address.street"/></div>
-              <div><label>City: </label><input type="text" placeholder="Ottawa" value.bind="patient.nextOfKin.address.city"/></div>
-              <div><label>Postal Code: </label><input type="text" placeholder="K1N 4F2" value.bind="patient.nextOfKin.address.postalCode"/></div>
-          </div>
-          <div>
-            <label>Telephone Number: </label>
-            <input type="text" placeholder="(111) 111-1111" value.bind="patient.nextOfKin.telephone"/>
-          </div>          
+          <label>Telephone Number:
+            <input type="text" placeholder="(111) 111-1111" value.bind="patient.nextOfKin.telephone & validate"/>
+          </label>
         </div>
         <div class="button-section">
-          <button type="submit">Register</button>
+            <button type="submit">Register</button>
         </div>
       </div>
   </form>

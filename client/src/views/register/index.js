@@ -1,20 +1,20 @@
 import {inject} from 'aurelia-framework'
 import {ValidationControllerFactory} from 'aurelia-validation'
-import {PatientService} from '../../services/patient'
-import {Patient} from '../../models/patient'
+import {StaffMemberService} from '../../services/staff_member'
+import {User} from '../../models/user'
 
-@inject(PatientService, ValidationControllerFactory)
-export class RegisterPatient {
-    constructor(patientService, controller) {
-        this.patientService = patientService
+@inject(StaffMemberService, ValidationControllerFactory)
+export class Register {
+    constructor(staffMemberService, controller) {
+        this.staffMemberService = staffMemberService
         this.controller = controller.createForCurrentScope()
-        this.patient = new Patient()
+        this.user = new User()
     }
 
     register() {
         this.controller.validate().then(result => {
             if (result.valid) {
-                this.patientService.register(this.patient).then(success => {
+                this.patientService.register(this.user).then(success => {
                     // display message
                 }).catch(err => {
                     // display er

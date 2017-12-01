@@ -1,3 +1,5 @@
+
+import {ValidationRules} from 'aurelia-validation'
 import {Address} from './address'
 import {NextOfKin} from './nextOfKin'
 
@@ -8,27 +10,19 @@ export class Patient {
         this.lastName = ''
         this.address = new Address()
         this.telephone = ''
-        this.dateOfBirthString = ''
+        this.dateOfBirth = ''
         this.gender = ''
         this.maritalStatus = ''
         this.externalDoctorId = ''
         this.nextOfKin = new NextOfKin()
     }
-
-    get dateOfBirth() {
-        if (!this.dateOfBirthString) {
-            return ''
-        } else {
-            dob = new Date(this.dateOfBirthString)
-            if (dob) {
-                return dob.toIsoString()
-            } else {
-                return ''
-            }
-        }
-    }
-    
-    validate() {
-        
-    }
 }
+
+ValidationRules
+    .ensure('id').required()
+    .ensure('firstName').required()
+    .ensure('lastName').required()
+    .ensure('telephone').required()//.matches('/\(\d{3}\)\s\d{3}-\d{4}/')
+    .ensure('dateOfBirth').required()//.matches('/\d{4}-\d{2}-\d{2}/')
+    .ensure('externalDoctorId').required()
+    .on(Patient)

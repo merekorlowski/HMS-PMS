@@ -9,7 +9,8 @@ export class Session {
     this.router = router
     this.key = null
     this.user = {
-      username: 'Merek Orlowski'
+      username: 'Merek Orlowski',
+      role: 'Medical Staff'
     }
   }
 
