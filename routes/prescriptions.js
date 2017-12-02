@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 
 /**
-* PATRICK
+* DONE: PAS
 */
 /**
 * Get Patient Prescriptions
@@ -26,7 +26,9 @@ router.get('/prescriptions', (req, res) => {
 		}
 
 		const query = client.query(`
-			QUERY GET PRESCRIPTIONS
+			SELECT *
+			FROM HMS-PMS.Prescription
+			WHERE patientID='${req.body.patientID}';
 			`);
 
 		query.on('row', row => {
@@ -43,7 +45,7 @@ router.get('/prescriptions', (req, res) => {
 });
 
 /**
-* PATRICK
+* DONE: PAS
 */
 /**
 * Prescibe Medication
@@ -60,8 +62,28 @@ router.post('/prescription', (req, res) => {
 
 		//Add a MedicalSupply
 		let queryText = `
-		QUERY F8.1: CREATE A PRECRIPTION
-		`;
+		INSERT 
+			INTO HMS-PMS.Prescription(
+			unitsByDay,
+			numOfAdministrationPerDay,
+			methodOfAdministration,
+			startDate,
+			finishDate,
+			numOfAdministrationPerTime,
+			userID, 
+			patientID
+			)
+			VALUES (
+			'${req.body.unitsByDay}',
+			'${req.body.numOfAdministrationPerDay}',
+			'${req.body.methodOfAdministration}',
+			'${req.body.patientID}',
+			'${req.body.startDate}',
+			'${req.body.finishDate}',
+			'${req.body.numOfAdministrationPerTime}',
+			'${req.body.patientID}'
+			);
+			`;
 
 		const query = client.query(queryText);
 
@@ -74,7 +96,7 @@ router.post('/prescription', (req, res) => {
 });
 
 /**
-* PATRICK
+* DONE: PAS
 */
 /**
 * Modify a Prescription
@@ -91,7 +113,18 @@ router.put('/prescription', (req, res, next) => {
 		}
 
 		const query = client.query(`
-			QUERY UPDATE PRESCRIPTION
+			UPDATE HMS-PMS.Prescription 			
+			SET 
+			unitsByDay= '${req.body.unitsByDay}',
+			numOfAdministrationPerDay='${req.body.numOfAdministrationPerDay}',
+			methodOfAdministration='${req.body.methodOfAdministration}',
+			startDate='${req.body.patientID}',
+			finishDate='${req.body.startDate}',
+			numOfAdministrationPerTime='${req.body.finishDate}',
+			userID='${req.body.numOfAdministrationPerTime}'
+			WHERE
+			patientID='${req.body.patientID}'
+			;
 			`);
 
 		// After all data is returned, close connection and return results
@@ -104,7 +137,7 @@ router.put('/prescription', (req, res, next) => {
 });
 
 /**
-* PATRICK
+* Done: PAS
 */
 /**
 * Delete a Prescription
@@ -123,7 +156,8 @@ router.delete('/prescriptions', (req, res, next) => {
 		}
 
 		const query = client.query(`
-			QUERY DELETE PRECRIPTION
+			DELETE FROM HMS-PMS.Prescription 
+			WHERE prescriptionID = '${req.body.prescriptionID}'
 			`);
 
 		// After all data is returned, close connection and return results
