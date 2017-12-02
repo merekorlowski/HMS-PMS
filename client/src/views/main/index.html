@@ -1,0 +1,17 @@
+<template>
+    <require from="./styles.css"></require>
+    <header>
+        <h1>HMS-PMS</h1>
+        <span click.trigger="session.logout()" id="userIcon"><span id="username">${session.user.username}</span><i class="material-icons">person_pin</i></span>
+    </header>
+    <nav>
+        <ul repeat.for="route of router.navigation">
+            <li class="${route.isActive ? 'active' : ''}"><a href.bind="route.href">${route.title}<i class="material-icons">${route.settings.icon}</i></a></li>
+        </ul>
+    </nav>
+    <section>
+       <router-view></router-view>
+    </section>
+    <footer></footer>
+</template>
+    

@@ -1,0 +1,9 @@
+
+#registerWrapper {
+    width: 650px;
+    margin: 100px auto;
+}
+
+#registerWrapper .page-title {
+    text-align: center;
+}

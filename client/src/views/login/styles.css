@@ -1,0 +1,82 @@
+#loginForm {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  margin-left: -250px;
+  margin-top: -175px;
+  width: 500px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 10px black;
+  height: 350px;
+  background-color: #f2f2f2;
+}
+
+#loginTitle {
+  margin: 0 auto;
+  text-align: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid #000000;
+  background-color: #b42929;
+  padding: 25px 10px;
+  color: #ffffff;
+  text-shadow: 1px 1px 2px #000000;
+}
+
+#loginContent {
+  padding: 30px;
+}
+
+.input-with-icon {
+  width: 400px;
+  padding: 15px;
+  margin: 15px auto;
+  border-radius: 5px;
+  font-size: 16px;
+  border: 1px solid #e6e6e6;
+  box-shadow: 1px 1px 2px #000000;
+  background-color: #ffffff;
+}
+  
+.input-with-icon input {
+  display: inline-block;
+  width: 325px;
+  margin: 0;
+  height: 100%;
+  border: none;
+}
+
+.input-with-icon span {
+  width: 50px;
+  height: 100%;
+  background-color: #ffffff;
+}
+
+.input-with-icon i {
+  vertical-align: middle;
+  color: #0000007e;
+}
+
+#loginRegisterButtons {
+  display: flex;
+  justify-content: space-between;
+  width: 400px;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+#loginRegisterButtons button {
+  width: 140px;
+  margin: 0;
+}
+
+#loginWrapper {
+  width: 500px;
+  margin: 100px auto;
+}
+
+#loginWrapper .page-title {
+  text-align: center;
+}

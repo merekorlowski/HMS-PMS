@@ -1,0 +1,23 @@
+<template>
+  <require from="./styles.css"></require>
+  <div class="shadow-layer"></div>
+  <div id="loginWrapper">
+    <form class="main-section">
+      <h3 class="page-title">Patient Management System (PMS)</h3>
+      <div class="content">
+        <div class="input-with-icon">
+          <input type="text" placeholder="Username" value.bind="username"/>
+          <span><i class="material-icons">person</i></span>
+        </div>
+        <div class="input-with-icon">
+          <input type="password" placeholder="Password" value.bind="password"/>
+          <span><i class="material-icons">email</i></span>
+        </div>
+        <div id="loginRegisterButtons">
+          <button click.trigger="register()">Register</button>
+          <button click.trigger="login()">Login</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</template>

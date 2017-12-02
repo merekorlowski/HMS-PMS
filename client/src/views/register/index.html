@@ -1,0 +1,50 @@
+<template>
+    <require from="./styles.css"></require>
+    <div class="shadow-layer"></div>
+    <div id="registerWrapper">
+        <form class="main-section">
+            <h3 class="page-title">Patient Management System (PMS)</h3>
+            <div class="content">
+                <div class="form-row">
+                    <label>User ID:
+                        <input type="text" value.bind="user.id & validate" placeholder="11111"/>
+                    </label>
+                </div>
+                <div class="form-row">
+                    <label>Password:
+                        <input type="password" value.bind="user.password & validate" placeholder="Must be alphanumeric"/>
+                    </label>
+                    <label>Confirm Password:
+                        <input type="password" value.bind="user.cpassword & validate" placeholder="Must match password"/>
+                    </label>
+                </div>
+                <div class="form-row">
+                    <label>First Name:
+                        <input type="text" value.bind="user.firstName & validate" placeholder="John"/>
+                    </label>
+                    <label>Last Name:
+                        <input type="text" value.bind="user.lastName & validate" placeholder="Doe"/>
+                    </label>
+                </div>
+                <div class="form-row">
+                    <label>Email Address:
+                        <input type="email" class="long-input" value.bind="user.email & validate" placeholder="example@gmail.com"/>
+                    </label>
+                </div>
+                <div class="form-row">
+                    <label>Role:
+                        <select value.bind="user.role">
+                            <option value="Doctor">Doctor</option>
+                            <option value="Nurse">Nurse</option>
+                            <option value="Personel Officer">Personel Officer</option>
+                            <option value="Medical Director">Medical Director</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="button-section">
+                    <button type="submit">Register</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</template>
