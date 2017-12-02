@@ -84,7 +84,7 @@ router.post('/patient', (req, res, next) => {
 	});
 });
 
-//PATRICK
+//DONE: PAS
 /**
  * Update patient registration
  */
@@ -100,7 +100,17 @@ router.put('/patient', (req, res, next) => {
 		}
 
 		const query = client.query(`
-			QUERY F2
+			UPDATE HMS-PMS.Patient
+			SET  
+			publicAssurance = '${req.body.publicAssurance}' ,
+			address	= '${req.body.address}',
+			phoneNumber = '${req.body.phoneNumber}',
+			dateOfBirth = '${req.body.dateOfBirth}',
+			gender = '${req.body.gender}',
+			maritalStatus = '${req.body.maritalStatus}'
+
+			WHERE patientID = '${req.body.patientID}';
+
 			`);
 
 		// After all data is returned, close connection and return results
