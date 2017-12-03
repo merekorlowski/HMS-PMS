@@ -40,6 +40,41 @@ router.get('/prescriptions', (req, res) => {
 });
 
 /**
+* Get Specific prescription
+*/
+router.get('/prescription', (req, res) => {
+
+	const results = [];
+
+	pg.connect(connectionString, (err, client, done) => {
+
+		// Handle connection errors
+		if(err) {
+			done();
+			console.log(err);
+			return res.status(500).json({success: false, data: err});
+		}
+
+		const query = client.query(`
+			SELECT *
+			FROM HMS-PMS.Prescription
+			WHERE prescriptionID='${req.body.prescriptionID}';
+			`);
+
+		query.on('row', row => {
+			results.push(row);
+		});
+
+		// After all data is returned, close connection and return results
+		query.on('end', () => {
+			done();
+			return res.json(results);
+		});
+
+	});
+});
+
+/**
 * Prescibe Medication
 */
 router.post('/prescription', (req, res) => {
