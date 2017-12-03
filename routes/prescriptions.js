@@ -210,8 +210,9 @@ router.get('/medications', (req, res) => {
 		}
 
 		const query = client.query(`
-			SELECT *
-			FROM HMS-PMS.PharmaceuticalSupply;
+			SELECT drugID,supplyName
+			FROM HMS-PMS.PharmaceuticalSupply 
+			NATURAL JOIN HMS-PMS.MedicalSupply;
 			`);
 
 		query.on('row', row => {
