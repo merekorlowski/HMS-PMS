@@ -5,14 +5,9 @@ const express = require('express');
 const router = express.Router();
 
 /**
-* DONE: PAS
-*/
-/**
 * Get Patient Prescriptions
 */
 router.get('/prescriptions', (req, res) => {
-	// patient passed in
-	let user = req.user
 
 	const results = [];
 
@@ -45,9 +40,6 @@ router.get('/prescriptions', (req, res) => {
 });
 
 /**
-* DONE: PAS
-*/
-/**
 * Prescibe Medication
 */
 router.post('/prescription', (req, res) => {
@@ -70,18 +62,20 @@ router.post('/prescription', (req, res) => {
 			startDate,
 			finishDate,
 			numOfAdministrationPerTime,
-			userID, 
-			patientID
+			localDoctorID, 
+			patientID,
+			drugID
 			)
 			VALUES (
 			'${req.body.unitsByDay}',
 			'${req.body.numOfAdministrationPerDay}',
 			'${req.body.methodOfAdministration}',
-			'${req.body.patientID}',
 			'${req.body.startDate}',
 			'${req.body.finishDate}',
 			'${req.body.numOfAdministrationPerTime}',
-			'${req.body.patientID}'
+			'${req.body.localDoctorID}',
+			'${req.body.patientID}',
+			'${req.body.drugID}'
 			);
 			`;
 
@@ -95,9 +89,6 @@ router.post('/prescription', (req, res) => {
 	});
 });
 
-/**
-* DONE: PAS
-*/
 /**
 * Modify a Prescription
 */
@@ -118,12 +109,13 @@ router.put('/prescription', (req, res, next) => {
 			unitsByDay= '${req.body.unitsByDay}',
 			numOfAdministrationPerDay='${req.body.numOfAdministrationPerDay}',
 			methodOfAdministration='${req.body.methodOfAdministration}',
-			startDate='${req.body.patientID}',
-			finishDate='${req.body.startDate}',
-			numOfAdministrationPerTime='${req.body.finishDate}',
-			userID='${req.body.numOfAdministrationPerTime}'
+			startDate='${req.body.startDate}',
+			finishDate='${req.body.finishDate}',
+			numOfAdministrationPerTime='${req.body.numOfAdministrationPerTime}',
+			localDoctorID='${req.body.localDoctorID}',
+			drugID = '${req.body.drugID}'
 			WHERE
-			patientID='${req.body.patientID}'
+			prescriptionID='${req.body.prescriptionID}'
 			;
 			`);
 
@@ -137,12 +129,9 @@ router.put('/prescription', (req, res, next) => {
 });
 
 /**
-* Done: PAS
-*/
-/**
 * Delete a Prescription
 */
-router.delete('/prescriptions', (req, res, next) => {
+router.delete('/prescription', (req, res, next) => {
 
 	const results = [];
 
@@ -157,7 +146,7 @@ router.delete('/prescriptions', (req, res, next) => {
 
 		const query = client.query(`
 			DELETE FROM HMS-PMS.Prescription 
-			WHERE prescriptionID = '${req.body.prescriptionID}'
+			WHERE prescriptionID = '${req.body.prescriptionID}';
 			`);
 
 		// After all data is returned, close connection and return results
@@ -168,5 +157,40 @@ router.delete('/prescriptions', (req, res, next) => {
 
 	});
 });
+
+/**
+* Get Drugs information
+*/
+router.get('/medications', (req, res) => {
+
+	const results = [];
+
+	pg.connect(connectionString, (err, client, done) => {
+
+		// Handle connection errors
+		if(err) {
+			done();
+			console.log(err);
+			return res.status(500).json({success: false, data: err});
+		}
+
+		const query = client.query(`
+			SELECT *
+			FROM HMS-PMS.PharmaceuticalSupply;
+			`);
+
+		query.on('row', row => {
+			results.push(row);
+		});
+
+		// After all data is returned, close connection and return results
+		query.on('end', () => {
+			done();
+			return res.json(results);
+		});
+
+	});
+});
+
 
 module.exports = router;
