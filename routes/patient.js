@@ -255,8 +255,7 @@ router.post('/patient/accept-admission', (req, res, next) => {
 			console.log(err);
 			return res.status(500).json({success: false, data: err});
 		}
-
-//select form divRequest - insert in roomadmission - delete from divRequest
+	//select form divRequest - insert in roomadmission - delete from divRequest
 		const query = client.query(`
 			SELECT *
 			FROM HMS-PMS.DivisionRequest
@@ -273,6 +272,29 @@ router.post('/patient/accept-admission', (req, res, next) => {
 	});
 });
 
+router.delete('/patient/discharge', (req, res, next) => {
+
+ 	pg.connect(connectionString, (err, client, done) => {
+
+		// Handle connection errors
+		if(err) {
+			done();
+			console.log(err);
+			return res.status(500).json({success: false, data: err});
+		}
+
+		const query = client.query(`
+			DELETE FROM HMS-PMS.RoomAdmission 
+			WHERE patientID = '${req.body.patientID}'
+			`);
+
+		// After all data is returned, close connection and return results
+		query.on('end', () => {
+			done();
+			return res.json();
+		});
+	});
+});
 
  module.exports = router;
 
