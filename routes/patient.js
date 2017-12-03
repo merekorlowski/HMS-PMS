@@ -9,7 +9,6 @@ const pg = require('pg');
 /**
 * Add a Patient with his NextOfKin
 */
-
 router.post('/patient', (req, res, next) => {
 
 	pg.connect(connectionString, (err, client, done) => {
@@ -272,6 +271,9 @@ router.post('/patient/accept-admission', (req, res, next) => {
 	});
 });
 
+/**
+ * Discharge patient
+ */
 router.delete('/patient/discharge', (req, res, next) => {
 
  	pg.connect(connectionString, (err, client, done) => {
