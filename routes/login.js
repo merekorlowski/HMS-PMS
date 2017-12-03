@@ -1,16 +1,7 @@
 const express = require('express')
 const router = express.Router()
-
-
-router.get('/users', (req, res) => {
-  //get users from db
-  return null
-})
-
-// DONE: PAS 
  
-router.get('/user', (req, res) => {
-  //get user from db
+router.get('/login', (req, res) => {
 
   pg.connect(connectionString, (err, client, done) => {
 
@@ -22,15 +13,13 @@ router.get('/user', (req, res) => {
 		}
 
 		//Add a NextOfKin
-		let queryText = `
+		const query = client.query(`
 			SELECT * from HMS-PMS.Staff 
 			WHERE 
-			userID = '${req.body.roomNumber}'
+			staffID = '${req.body.roomNumber}'
 			AND 
 			password = '${req.body.roomNumber}';
-			`;
-
-		const query = client.query(queryText);
+			`);
 
 		// After all data is returned, close connection and return results
 		query.on('end', () => {
