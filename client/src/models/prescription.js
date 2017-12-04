@@ -13,8 +13,4 @@ export class Prescription {
         this.startDate = new Date()
         this.endDate = new Date()
     }
-    
-    validate() {
-        
-    }
 }

@@ -7,17 +7,34 @@ export class Login {
   constructor(session, router) {
     this.session = session
     this.router = router
-    this.username = ''
-    this.password = ''
+    this.userID = this.session.user.userID || ''
+    this.password = this.session.user.password || ''
+    this.invalidUserID = false
+    this.invalidPassword = false
   }
 
   login() {
-    this.session.login(this.username, this.password).then(() => {
-      this.router.navigate('PMS')
-    })
+    if (this.userID === '') {
+      this.invalidUsername = true
+    }
+
+    if (this.password === '') {
+      this.invalidPassword = true
+    }
+
+    if (!this.invalidUserID && !this.invalidPassword) {
+      //this.session.login(this.userID, this.password).then(() => {
+        this.router.navigate('PMS')
+      //})
+    }
   }
 
   register() {
     this.router.navigate('register')
   }
+
+  deactivate() {
+    this.session.newUserRegistered = false
+  }
+
 }

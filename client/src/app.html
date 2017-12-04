@@ -1,4 +1,7 @@
 <template>
   <require from="./styles.css"></require>
+  <ul id="toaster">
+    <li repeat.for="message of toaster.messages" class.bind="message.type">${message.text}</li>
+  </ul>
   <router-view></router-view>
 </template>

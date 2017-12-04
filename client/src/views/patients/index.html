@@ -1,0 +1,176 @@
+<template>
+    <require from="./styles.css"></require>
+    <h2>Patients</h2>
+    <hr/>
+    <form id="searchForPatientForm" submit="search()">
+        <div class="search-bar">
+            <input value.bind="patientID" placeholder="Patient ID" />
+            <button type="submit"><i class="material-icons">search</i></button>
+        </div>
+    </form>
+    <div id="noRegisteredPatientsMsg" if.bind="patients.length === 0">
+        There are no patients currently registered.
+    </div>
+    <ul id="patientList">
+        <li repeat.for="patient of patients">
+            <div><strong>${patient.patientID}</strong></div>
+            <div class="patient-name">${patient.lastName}, ${patient.firstName}</div>
+            <a class="view-patient-btn btn" href="/#/PMS/patient/${patient.patientID}"><i class="material-icons">forward</i></a>
+        </li>
+    </ul>
+    <button id="displayRegistrationFormBtn" class="btn" click.trigger="displayRegistrationForm()">Register Patient</button>
+    <div if.bind="isDisplayingRegistrationForm" class="popup-form">
+        <div class="shadow-layer"></div>
+        <form id="patientRegistrationForm">
+            <button class="cancel-button" click.trigger="hideRegistrationForm()">
+                <i class="material-icons">clear</i>
+            </button>
+            <div id="patientInfo" if.bind="step === 1">
+                <h2>Patient Information</h2>
+                <hr/>
+                <div class="form-row">
+                <label><span class="required-field">* </span>Government Insurance Number:
+                    <input type="text" value.bind="newPatient.patientID" placeholder="111-111-111"
+                    focusout.trigger="newPatient.hasChanged('patientID')"
+                    class.bind="newPatient.changed['patientID'] ? (newPatient.isPatientIDValid ? 'valid' : 'invalid'): ''"
+                    />
+                </label>
+                </div>
+                <div class="form-row">
+                <label><span class="required-field">* </span>First Name:
+                    <input type="text" value.bind="newPatient.firstName" placeholder="John"
+                    focusout.trigger="newPatient.hasChanged('firstName')"
+                    class.bind="newPatient.changed['firstName'] ? (newPatient.isFirstNameValid ? 'valid' : 'invalid'): ''"
+                    />
+                </label>
+                <label><span class="required-field">* </span>Last Name:
+                    <input type="text" value.bind="newPatient.lastName" placeholder="Doe"
+                    focusout.trigger="newPatient.hasChanged('lastName')"
+                    class.bind="newPatient.changed['lastName'] ? (newPatient.isLastNameValid ? 'valid' : 'invalid'): ''"
+                    />
+                </label>
+                </div>
+                <div class="form-row">
+                <label><span class="required-field">* </span>Telephone Number:
+                    <input type="text" class="input-short" value.bind="newPatient.telephone" placeholder="6131234567"
+                    focusout.trigger="newPatient.hasChanged('telephone')"
+                    class.bind="newPatient.changed['telephone'] ? (newPatient.isTelephoneValid ? 'valid' : 'invalid'): ''"
+                    />
+                </label>
+                </div>
+                <div class="form-row">
+                <label><span class="required-field">* </span>Address Line 1:
+                    <input type="text" class="input-long" placeholder="Number, Street, Unit" value.bind="newPatient.address.line1"
+                        focusout.trigger="newPatient.address.hasChanged('line1')"
+                        class.bind="newPatient.address.changed['line1'] ? (newPatient.address.isLine1Valid ? 'valid' : 'invalid'): ''"
+                    />
+                </label>
+                </div>
+                <div class="form-row">
+                <label><span class="required-field">* </span>City:
+                    <input type="text" placeholder="Ottawa" value.bind="newPatient.address.city"
+                    focusout.trigger="newPatient.address.hasChanged('city')"
+                    class.bind="newPatient.address.changed['city'] ? (newPatient.address.isCityValid ? 'valid' : 'invalid'): ''"
+                    />
+                </label>
+                <label><span class="required-field">* </span>Postal Code:
+                    <input type="text" placeholder="K1N4F2" value.bind="newPatient.address.postalCode"
+                    focusout.trigger="newPatient.address.hasChanged('postalCode')"
+                    class.bind="newPatient.address.changed['postalCode'] ? (newPatient.address.isPostalCodeValid ? 'valid' : 'invalid'): ''"
+                    />
+                </label>
+                </div>
+                <label><span class="required-field">* </span>Date Of Birth:
+                <input type="text" placeholder="dd/mm/yyyy" value.bind="newPatient.dateOfBirth"
+                    focusout.trigger="newPatient.hasChanged('dateOfBirth')"
+                    class.bind="newPatient.changed['dateOfBirth'] ? (newPatient.isDateOfBirthValid ? 'valid' : 'invalid'): ''"
+                />
+                </label>
+                <div class="form-row">
+                <label><span class="required-field">* </span>Gender:
+                    <select value.bind="newPatient.gender">
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                    <option value="O">Other</option>
+                    <option value="PNS">Prefer not to specify</option>
+                    </select>
+                </label>
+                <label><span class="required-field">* </span>Marital Status:
+                    <select value.bind="newPatient.maritalStatus">
+                    <option value="S">Single</option>
+                    <option value="M">Married</option>
+                    <option value="D">Divorced</option>  
+                    </select>
+                </label>
+                </div>
+                <label><span class="required-field">* </span>External Doctor ID:
+                <input value.bind="newPatient.externalDoctorID" placeholder="1111"
+                    focusout.trigger="newPatient.hasChanged('externalDoctorID')"
+                    class.bind="newPatient.changed['externalDoctorID'] ? (newPatient.isExternalDoctorIDValid ? 'valid' : 'invalid'): ''"
+                />
+                </label>
+            </div>
+            <div if.bind="step === 2">
+                <h2>Next Of Kin Information</h2>
+                <hr/>
+                <div class="form-row">
+                <label><span class="required-field">* </span>First Name:
+                    <input type="text" placeholder="John" value.bind="newPatient.nextOfKin.firstName"
+                    focusout.trigger="newPatient.nextOfKin.hasChanged('firstName')"
+                    class.bind="newPatient.nextOfKin.changed['firstName'] ? (newPatient.nextOfKin.isFirstNameValid ? 'valid' : 'invalid'): ''"
+                    />
+                </label>
+                <label><span class="required-field">* </span>Last Name:
+                    <input type="text" placeholder="Doe" value.bind="newPatient.nextOfKin.lastName"
+                    focusout.trigger="newPatient.nextOfKin.hasChanged('lastName')"
+                    class.bind="newPatient.nextOfKin.changed['lastName'] ? (newPatient.nextOfKin.isLastNameValid ? 'valid' : 'invalid'): ''"
+                    />
+                </label>
+                </div>
+                <div class="form-row">
+                <label><span class="required-field">* </span>Relationship to Patient:
+                    <input type="text" placeholder="Father" value.bind="newPatient.nextOfKin.relationshipToPatient"
+                    focusout.trigger="newPatient.nextOfKin.hasChanged('relationshipToPatient')"
+                    class.bind="newPatient.nextOfKin.changed['relationshipToPatient'] ? (newPatient.nextOfKin.isRelationshipToPatientValid ? 'valid' : 'invalid'): ''"
+                    />
+                </label>
+                </div>
+                <div class="form-row">
+                <label><span class="required-field">* </span>Address Line 1:
+                    <input type="text" class="input-long" placeholder="Number, Street, Unit" value.bind="newPatient.nextOfKin.address.line1"
+                        focusout.trigger="newPatient.nextOfKin.address.hasChanged('line1')"
+                        class.bind="newPatient.nextOfKin.address.changed['line1'] ? (newPatient.nextOfKin.address.isLine1Valid ? 'valid' : 'invalid'): ''"
+                    />
+                </label>
+                </div>
+                <div class="form-row">
+                <label><span class="required-field">* </span>City:
+                    <input type="text" placeholder="Ottawa" value.bind="newPatient.nextOfKin.address.city"
+                    focusout.trigger="newPatient.nextOfKin.address.hasChanged('city')"
+                    class.bind="newPatient.nextOfKin.address.changed['city'] ? (newPatient.nextOfKin.address.isCityValid ? 'valid' : 'invalid'): ''"
+                    />
+                </label>
+                <label><span class="required-field">* </span>Postal Code:
+                    <input type="text" placeholder="K1N4F2" value.bind="newPatient.nextOfKin.address.postalCode"
+                    focusout.trigger="newPatient.nextOfKin.address.hasChanged('postalCode')"
+                    class.bind="newPatient.nextOfKin.address.changed['postalCode'] ? (newPatient.nextOfKin.address.isPostalCodeValid ? 'valid' : 'invalid'): ''"
+                    />
+                </label>
+                </div>
+                <div>
+                <label><span class="required-field">* </span>Telephone Number:
+                    <input type="text" placeholder="6131234567" value.bind="newPatient.nextOfKin.telephone"
+                    focusout.trigger="newPatient.nextOfKin.hasChanged('telephone')"
+                    class.bind="newPatient.nextOfKin.changed['telephone'] ? (newPatient.nextOfKin.isTelephoneValid ? 'valid' : 'invalid'): ''"
+                    />
+                </label>
+                </div>
+            </div>
+            <div class="button-section">
+                <button id="nextBtn" if.bind="step === 1" class="btn" click.trigger="next()">Next</button>
+                <button id="prevBtn" if.bind="step === 2" class="btn" click.trigger="prev()">Previous</button>
+                <button id="registerBtn" if.bind="step === 2" class="btn" click.trigger="register()">Register</button>
+            </div>
+        </form>
+    </div>
+</template>

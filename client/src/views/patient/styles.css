@@ -1,0 +1,63 @@
+
+#patientFile {
+    position: relative;
+}
+
+.patient-info {
+    margin: 10px 0;
+}
+.patient-info strong {
+    display: inline-block;
+    width: 350px;
+}
+
+#editFileBtn {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.patient-file-button {
+    position: absolute;
+    right: 50px;
+    bottom: 100px;
+}
+
+#admitPatientForm {
+    width: 700px;
+    margin: 100px auto;
+}
+
+#admitPatientBtn {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+}
+
+#updatePatientForm {
+    width: 700px;
+    margin: 100px auto;
+}
+
+#nextBtn, #saveBtn {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+#prevBtn {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+}
+
+#addPrescriptionForm {
+    width: 700px;
+    margin: 100px auto;
+}
+
+#addPrescriptionBtn {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+}
