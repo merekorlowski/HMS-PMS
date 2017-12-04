@@ -96,7 +96,8 @@ CREATE TABLE "Patient" (
     "Gender" character(1) NOT NULL,
     "MaritalStatus" character(1) NOT NULL,
     "PrivateInsurrance" character varying NOT NULL,
-    "nofFullName" character varying NOT NULL,
+    "nofFirstName" character varying NOT NULL,
+    "nofLastName" character varying NOT NULL,
     "Relationship" character(1) NOT NULL,
     "nofAddress" character varying NOT NULL,
     "nofPhoneNumber" integer NOT NULL
@@ -210,7 +211,7 @@ ALTER TABLE ONLY "Nurse"
     ADD CONSTRAINT "Nurse_pkey" PRIMARY KEY ("NurseId");
 
 ALTER TABLE ONLY "Patient"
-    ADD CONSTRAINT "Patient_PatientID_key" UNIQUE ("PatientID");
+    ADD CONSTRAINT "Patient_pkey" PRIMARY KEY ("PatientID");
 
 ALTER TABLE ONLY "PersonnalOfficer"
     ADD CONSTRAINT "PersonnalOfficer_pkey" PRIMARY KEY ("PersonnalOfficerID");
