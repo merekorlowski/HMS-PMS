@@ -11,11 +11,11 @@
     <div id="noRegisteredPatientsMsg" if.bind="patients.length === 0">
         There are no patients currently registered.
     </div>
-    <ul id="patientList">
+    <ul class="list">
         <li repeat.for="patient of patients">
             <div><strong>${patient.patientID}</strong></div>
             <div class="patient-name">${patient.lastName}, ${patient.firstName}</div>
-            <a class="view-patient-btn btn" href="/#/PMS/patient/${patient.patientID}"><i class="material-icons">forward</i></a>
+            <a class="view-btn" href="/#/PMS/patient/${patient.patientID}"><i class="material-icons">forward</i></a>
         </li>
     </ul>
     <button id="displayRegistrationFormBtn" class="btn" click.trigger="displayRegistrationForm()">Register Patient</button>

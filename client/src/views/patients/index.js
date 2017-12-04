@@ -1,11 +1,13 @@
 import {inject} from 'aurelia-framework'
+import {Router} from 'aurelia-router'
 
 import {PatientService} from '../../services/patient'
 import {Patient} from '../../models/patient'
 
-@inject(PatientService)
+@inject(Router, PatientService)
 export class Patients {
-    constructor(patientService) {
+    constructor(router, patientService) {
+        this.router = router
         this.patientService = patientService
         this.patientID = ''
         this.patients = []
@@ -27,11 +29,15 @@ export class Patients {
     }
 
     search() {
-        for (let patient of patients) {
+        found = false
+        for (let patient of this.patients) {
             if (patient.patientID === this.patientID) {
-                this.patient = patient
+                found = true
                 break
             }
+        }
+        if (found) {
+            this.router.navigate(`patient/${this.patientID}`)
         }
     }
 
@@ -52,12 +58,14 @@ export class Patients {
     }
 
     register() {
-        //this.patientService.register(this.newPatient).then(() => {
-            this.isDisplayingRegistrationForm = false
-            this.patients.push(this.newPatient)
-        //}).catch(err => {
+        if (this.newPatient.isValid()) {
+            //this.patientService.register(this.newPatient).then(() => {
+                this.isDisplayingRegistrationForm = false
+                this.patients.push(this.newPatient)
+            //}).catch(err => {
 
-        //})
+            //})
+        }
     }
 
 }
