@@ -73,16 +73,6 @@ CREATE TABLE "MedicalSupply" (
     "MethodOfAdministration" character varying NOT NULL
 );
 
-CREATE TABLE "Non-Medical" (
-    "Email" character varying NOT NULL,
-    "Password" character varying NOT NULL,
-    "Qualifications" text,
-    "WorkExperience" text,
-    "FirstName" character varying NOT NULL,
-    "LastName" character varying NOT NULL,
-    "NonMedicalID" integer NOT NULL
-);
-
 CREATE TABLE "Nurse" (
     "NurseId" integer NOT NULL,
     "IsSpecialiste" boolean NOT NULL
