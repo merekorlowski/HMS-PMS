@@ -16,7 +16,7 @@ CREATE TABLE "Auxiliary" (
     "IsSpecialiste" boolean NOT NULL
 );
 
-CREATE TABLE "Beds" (
+CREATE TABLE "Bed" (
     "BedNumber" integer NOT NULL,
     "RoomNumber" integer NOT NULL,
     "DivisionID" integer NOT NULL
@@ -176,8 +176,8 @@ ALTER TABLE ONLY "AccessorySupply"
 ALTER TABLE ONLY "Auxiliary"
     ADD CONSTRAINT "Auxiliary_pkey" PRIMARY KEY ("AuxiliaryID");
 
-ALTER TABLE ONLY "Beds"
-    ADD CONSTRAINT "Beds_pkey" PRIMARY KEY ("BedNumber", "RoomNumber", "DivisionID");
+ALTER TABLE ONLY "Bed"
+    ADD CONSTRAINT "Bed_pkey" PRIMARY KEY ("BedNumber", "RoomNumber", "DivisionID");
 
 ALTER TABLE ONLY "ChargeNurse"
     ADD CONSTRAINT "ChargeNurse_pkey" PRIMARY KEY ("ChargeNurseId");
