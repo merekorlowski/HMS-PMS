@@ -5,14 +5,9 @@ const express = require('express');
 const router = express.Router();
 
 /**
-* PATRICK
-*/
-/**
 * Get Patient Prescriptions
 */
 router.get('/prescriptions', (req, res) => {
-	// patient passed in
-	let user = req.user
 
 	const results = [];
 
@@ -26,7 +21,9 @@ router.get('/prescriptions', (req, res) => {
 		}
 
 		const query = client.query(`
-			QUERY GET PRESCRIPTIONS
+			SELECT *
+			FROM HMS-PMS.Prescription
+			WHERE patientID='${req.body.patientID}';
 			`);
 
 		query.on('row', row => {
@@ -43,8 +40,40 @@ router.get('/prescriptions', (req, res) => {
 });
 
 /**
-* PATRICK
+* Get Specific prescription
 */
+router.get('/prescription', (req, res) => {
+
+	const results = [];
+
+	pg.connect(connectionString, (err, client, done) => {
+
+		// Handle connection errors
+		if(err) {
+			done();
+			console.log(err);
+			return res.status(500).json({success: false, data: err});
+		}
+
+		const query = client.query(`
+			SELECT *
+			FROM HMS-PMS.Prescription
+			WHERE prescriptionID='${req.body.prescriptionID}';
+			`);
+
+		query.on('row', row => {
+			results.push(row);
+		});
+
+		// After all data is returned, close connection and return results
+		query.on('end', () => {
+			done();
+			return res.json(results);
+		});
+
+	});
+});
+
 /**
 * Prescibe Medication
 */
@@ -60,8 +89,30 @@ router.post('/prescription', (req, res) => {
 
 		//Add a MedicalSupply
 		let queryText = `
-		QUERY F8.1: CREATE A PRECRIPTION
-		`;
+		INSERT 
+			INTO HMS-PMS.Prescription(
+			unitsByDay,
+			numOfAdministrationPerDay,
+			methodOfAdministration,
+			startDate,
+			finishDate,
+			numOfAdministrationPerTime,
+			localDoctorID, 
+			patientID,
+			drugID
+			)
+			VALUES (
+			'${req.body.unitsByDay}',
+			'${req.body.numOfAdministrationPerDay}',
+			'${req.body.methodOfAdministration}',
+			'${req.body.startDate}',
+			'${req.body.finishDate}',
+			'${req.body.numOfAdministrationPerTime}',
+			'${req.body.localDoctorID}',
+			'${req.body.patientID}',
+			'${req.body.drugID}'
+			);
+			`;
 
 		const query = client.query(queryText);
 
@@ -73,9 +124,6 @@ router.post('/prescription', (req, res) => {
 	});
 });
 
-/**
-* PATRICK
-*/
 /**
 * Modify a Prescription
 */
@@ -91,7 +139,19 @@ router.put('/prescription', (req, res, next) => {
 		}
 
 		const query = client.query(`
-			QUERY UPDATE PRESCRIPTION
+			UPDATE HMS-PMS.Prescription 			
+			SET 
+			unitsByDay= '${req.body.unitsByDay}',
+			numOfAdministrationPerDay='${req.body.numOfAdministrationPerDay}',
+			methodOfAdministration='${req.body.methodOfAdministration}',
+			startDate='${req.body.startDate}',
+			finishDate='${req.body.finishDate}',
+			numOfAdministrationPerTime='${req.body.numOfAdministrationPerTime}',
+			localDoctorID='${req.body.localDoctorID}',
+			drugID = '${req.body.drugID}'
+			WHERE
+			prescriptionID='${req.body.prescriptionID}'
+			;
 			`);
 
 		// After all data is returned, close connection and return results
@@ -104,12 +164,9 @@ router.put('/prescription', (req, res, next) => {
 });
 
 /**
-* PATRICK
-*/
-/**
 * Delete a Prescription
 */
-router.delete('/prescriptions', (req, res, next) => {
+router.delete('/prescription', (req, res, next) => {
 
 	const results = [];
 
@@ -123,7 +180,8 @@ router.delete('/prescriptions', (req, res, next) => {
 		}
 
 		const query = client.query(`
-			QUERY DELETE PRECRIPTION
+			DELETE FROM HMS-PMS.Prescription 
+			WHERE prescriptionID = '${req.body.prescriptionID}';
 			`);
 
 		// After all data is returned, close connection and return results
@@ -134,5 +192,41 @@ router.delete('/prescriptions', (req, res, next) => {
 
 	});
 });
+
+/**
+* Get Drugs information
+*/
+router.get('/medications', (req, res) => {
+
+	const results = [];
+
+	pg.connect(connectionString, (err, client, done) => {
+
+		// Handle connection errors
+		if(err) {
+			done();
+			console.log(err);
+			return res.status(500).json({success: false, data: err});
+		}
+
+		const query = client.query(`
+			SELECT drugID,supplyName
+			FROM HMS-PMS.PharmaceuticalSupply 
+			NATURAL JOIN HMS-PMS.MedicalSupply;
+			`);
+
+		query.on('row', row => {
+			results.push(row);
+		});
+
+		// After all data is returned, close connection and return results
+		query.on('end', () => {
+			done();
+			return res.json(results);
+		});
+
+	});
+});
+
 
 module.exports = router;
