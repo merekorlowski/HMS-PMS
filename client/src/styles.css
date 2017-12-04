@@ -16,6 +16,10 @@ body {
   box-sizing: border-box;
 }
 
+input, select, button, a {
+  font-size: 18px;
+}
+
 .form-row {
   display: flex;
 }
@@ -267,4 +271,38 @@ Required field
   color: #b42929;
   font-weight: bold;
   margin-left: -10px;
+}
+
+/***
+list
+****/
+
+.list {
+  list-style-type: none;
+  margin: 40px 0;
+  padding: 0;
+  height: 450px;
+  overflow-y: auto;
+}
+.list li {
+  box-shadow: 1px 1px 5px #000000;
+  border-radius: 5px;
+  margin-right: 20px;
+  margin: 10px 20px;
+  padding: 25px;
+  width: 300px;
+  display: inline-block;
+  position: relative;
+}
+.list li:hover {
+  background-color: #b42929;
+  color: #ffffff;
+}
+.view-btn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  border: none;
+  background-color: transparent;
+  color: #ffffff;
 }
