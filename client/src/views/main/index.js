@@ -5,6 +5,7 @@ import {Session} from '../../services/session'
 export class Main {
 	constructor(session) {
     this.session = session
+    this.menuIsVisible = false
 	}
   configureRouter(config, router) {
     config.map([
@@ -15,31 +16,36 @@ export class Main {
         title: 'Home',
         nav: true
       },
-      { 
-        route: 'consult_patient_file',
-        name: 'consult_patient_file',
-        moduleId: 'views/consult_patient_file/index',
-        title: 'Consult Patient File',
-        nav: true, 
-        settings: {
-          icon: 'assignment_ind'
-        } 
+      {
+        route: 'patients',
+        name: 'patients',
+        moduleId: 'views/patients/index',
+        title: 'Patients',
+        nav: true
       },
-      { 
-        route: 'visualize_division',
-        name: 'visualize_division',
-        moduleId: 'views/visualize_division/index',
-        title: 'Visualize Division',
-        nav: this.session.user.type == 'Charge Nurse' 
+      {
+        route: 'patient/:id',
+        name: 'patient',
+        moduleId: 'views/patient/index'
       },
-      { 
-        route: 'register_patient',
-        name: 'register_patient',
-        moduleId: 'views/register_patient/index',
-        title: 'Register Patient',
-        nav: this.session.user.type == 'Medical Staff'
+      {
+        route: 'divisions',
+        name: 'divisions',
+        moduleId: 'views/divisions/index',
+        title: 'Divisions',
+        nav: true
+      },
+      {
+        route: 'division/:id',
+        name: 'division',
+        moduleId: 'views/division/index'
       }
     ])
     this.router = router
   }
+
+  toggleMenu() {
+    this.menuIsVisible = !this.menuIsVisible
+  }
+
 }

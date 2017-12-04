@@ -5,13 +5,15 @@
     <form class="main-section">
       <h3 class="page-title">Patient Management System (PMS)</h3>
       <div class="content">
-        <div class="input-with-icon">
-          <input type="text" placeholder="Username" value.bind="username"/>
-          <span><i class="material-icons">person</i></span>
+        <div>
+          <input type="text" placeholder="User ID" value.bind="userID"
+            class.bind="invalidUserID ? 'invalid' : ''"
+          />
         </div>
-        <div class="input-with-icon">
-          <input type="password" placeholder="Password" value.bind="password"/>
-          <span><i class="material-icons">email</i></span>
+        <div>
+          <input type="password" placeholder="Password" value.bind="password"
+            class.bind="invalidPassword ? 'invalid' : ''"
+          />
         </div>
         <div id="loginRegisterButtons">
           <button click.trigger="register()">Register</button>

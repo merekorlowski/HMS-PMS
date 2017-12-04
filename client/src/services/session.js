@@ -9,21 +9,19 @@ export class Session {
     this.router = router
     this.key = null
     this.user = {
-      username: 'Merek Orlowski',
-      role: 'Medical Staff'
+      userID: 'morlo088',
+      password: 'pass',
+      role: 'Doctor'
     }
   }
 
-  login(username, password) {
+  login(userID, password) {
     return this.http.fetch(`/session/login`, {
-      username: username,
+      userID: userID,
       password: password
-    }).then(response => response.json()).then(data => {
+    }).then(response => response.json()).then(user => {
       this.key = 'key'//response.key
-      this.user = {
-        username: username,
-        password: password
-      }
+      this.user = {userID: userID, password: password, role: 'Doctor'}//user
     })
   }
 
