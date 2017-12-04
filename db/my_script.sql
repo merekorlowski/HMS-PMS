@@ -90,7 +90,9 @@ CREATE TABLE "Patient" (
     "nofLastName" character varying NOT NULL,
     "Relationship" character(1) NOT NULL,
     "nofAddress" character varying NOT NULL,
-    "nofPhoneNumber" integer NOT NULL
+    "nofPhoneNumber" integer NOT NULL,
+    "FirstName" character varying NOT NULL,
+    "LastName" character varying NOT NULL
 );
 
 CREATE TABLE "PersonnalOfficer" (
