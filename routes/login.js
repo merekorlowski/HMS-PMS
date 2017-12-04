@@ -60,7 +60,7 @@ router.post('/register', (req, res, next) => {
 			INSERT 
 			INTO HMS-PMS.LocalDoctor
 			VALUES (
-			'${req.body.userId}',
+			'${req.body.staffID}',
 			'${req.body.isSpecialiste}'
 			);
 			`;
@@ -72,7 +72,7 @@ router.post('/register', (req, res, next) => {
 			INSERT 
 			INTO HMS-PMS.Nurse
 			VALUES (
-			'${req.body.userId}',
+			'${req.body.staffID}',
 			'${req.body.isSpecialiste}'
 			);
 			`;
@@ -84,7 +84,7 @@ router.post('/register', (req, res, next) => {
 			INSERT 
 			INTO HMS-PMS.ChargeNurse
 			VALUES (
-			'${req.body.userId}',
+			'${req.body.staffID}',
 			'${req.body.phoneNumber}',
 			'${req.body.bipperExtension}'
 			);
@@ -97,7 +97,7 @@ router.post('/register', (req, res, next) => {
 			INSERT 
 			INTO HMS-PMS.Director
 			VALUES (
-			'${req.body.userId}'
+			'${req.body.staffID}'
 			);
 			`;
 		}
@@ -108,7 +108,7 @@ router.post('/register', (req, res, next) => {
 			INSERT 
 			INTO HMS-PMS.NonMedical
 			VALUES (
-			'${req.body.userId}'
+			'${req.body.staffID}'
 			);
 			`;
 		}
@@ -119,7 +119,7 @@ router.post('/register', (req, res, next) => {
 			INSERT 
 			INTO HMS-PMS.Auxiliary
 			VALUES (
-			'${req.body.userId}',
+			'${req.body.staffID}',
 			'${req.body.isSpecialiste}'
 			);
 			`;
@@ -131,7 +131,7 @@ router.post('/register', (req, res, next) => {
 			INSERT 
 			INTO HMS-PMS.PersonnelOfficer
 			VALUES (
-			'${req.body.userId}'
+			'${req.body.staffID}'
 			);
 			`;
 		}
