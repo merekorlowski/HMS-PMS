@@ -1,11 +1,13 @@
 import {Redirect} from 'aurelia-router'
 import {inject} from 'aurelia-framework'
 import {Session} from './services/session'
+import {Toaster} from './services/toaster'
 
-@inject(Session)
+@inject(Session, Toaster)
 export class App {
-  constructor(session) {
+  constructor(session, toaster) {
     this.session = session
+    this.toaster = toaster
   }
 
   configureRouter(config, router) {

@@ -2,15 +2,26 @@
     <require from="./styles.css"></require>
     <header>
         <h1>HMS-PMS</h1>
-        <span click.trigger="session.logout()" id="userIcon"><span id="username">${session.user.username}</span><i class="material-icons">person_pin</i></span>
+        <span id="userIcon">
+            <i class="material-icons">person_pin</i>
+            <span id="username">${session.user.userID}</span>
+            <i class="material-icons" id="toggleMenuIcon" click.trigger="toggleMenu()">
+                ${menuIsVisible ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}
+            </i>
+        </span>
+        <ul id="menu" if.bind="menuIsVisible">
+            <li click.trigger="session.logout()">Logout</li>
+        </ul>
     </header>
     <nav>
         <ul repeat.for="route of router.navigation">
-            <li class="${route.isActive ? 'active' : ''}"><a href.bind="route.href">${route.title}<i class="material-icons">${route.settings.icon}</i></a></li>
+            <li class="${route.isActive ? 'active' : ''}">
+                <a href.bind="route.href">${route.title}<i class="material-icons">${route.settings.icon}</i></a>
+            </li>
         </ul>
     </nav>
     <section>
-       <router-view></router-view>
+        <router-view></router-view>
     </section>
     <footer></footer>
 </template>

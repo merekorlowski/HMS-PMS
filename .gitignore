@@ -2,6 +2,7 @@
 /bin/
 =======
 .vscode
+.idea
 .editorconfig
 .db_credentials
 node_modules/*

@@ -1,0 +1,18 @@
+<template>
+    <require from="./styles.css"></require>
+    <h2>Divisions</h2>
+    <hr/>
+    <form submit="search()">
+        <div class="search-bar">
+            <input value.bind="patientID" placeholder="Division ID" />
+            <button type="submit"><i class="material-icons">search</i></button>
+        </div>
+    </form>
+    <ul class="list">
+        <li repeat.for="division of divisions">
+            <div><strong>${division.divisionID}</strong></div>
+            <div class="divison-name">${division.name}</div>
+            <a class="view-btn btn" href="/#/PMS/division/${division.divisionID}"><i class="material-icons">forward</i></a>
+        </li>
+    </ul>
+</template>

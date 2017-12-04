@@ -2,37 +2,55 @@
     <require from="./styles.css"></require>
     <div class="shadow-layer"></div>
     <div id="registerWrapper">
-        <form class="main-section">
+        <form class="main-section" submit.trigger="register()">
             <h3 class="page-title">Patient Management System (PMS)</h3>
             <div class="content">
                 <div class="form-row">
-                    <label>User ID:
-                        <input type="text" value.bind="user.id & validate" placeholder="11111"/>
+                    <label><span class="required-field">* </span>User ID:
+                        <input type="text" value.bind="user.userID" placeholder="Must be unique"
+                            focusout.trigger="user.hasChanged('userID')"
+                            class.bind="user.changed['userID'] ? (user.isUserIDValid ? 'valid' : 'invalid'): ''"
+                        />
                     </label>
                 </div>
                 <div class="form-row">
-                    <label>Password:
-                        <input type="password" value.bind="user.password & validate" placeholder="Must be alphanumeric"/>
+                    <label><span class="required-field">* </span>Password:
+                        <input type="password" value.bind="user.password" placeholder="Must be alphanumeric"
+                            focusout.trigger="user.hasChanged('password')"
+                            class.bind="user.changed['password'] ? (user.isPasswordValid ? 'valid' : 'invalid'): ''"
+                        />
                     </label>
-                    <label>Confirm Password:
-                        <input type="password" value.bind="user.cpassword & validate" placeholder="Must match password"/>
-                    </label>
-                </div>
-                <div class="form-row">
-                    <label>First Name:
-                        <input type="text" value.bind="user.firstName & validate" placeholder="John"/>
-                    </label>
-                    <label>Last Name:
-                        <input type="text" value.bind="user.lastName & validate" placeholder="Doe"/>
+                    <label><span class="required-field">* </span>Confirm Password:
+                        <input type="password" value.bind="user.cpassword" placeholder="Must match password"
+                            focusout.trigger="user.hasChanged('cpassword')"
+                            class.bind="user.changed['cpassword'] ? (user.isCPasswordValid ? 'valid' : 'invalid'): ''"
+                        />
                     </label>
                 </div>
                 <div class="form-row">
-                    <label>Email Address:
-                        <input type="email" class="long-input" value.bind="user.email & validate" placeholder="example@gmail.com"/>
+                    <label><span class="required-field">* </span>First Name:
+                        <input type="text" value.bind="user.firstName" placeholder="John"
+                            focusout.trigger="user.hasChanged('firstName')"
+                            class.bind="user.changed['firstName'] ? (user.isFirstNameValid ? 'valid' : 'invalid'): ''"
+                        />
+                    </label>
+                    <label><span class="required-field">* </span>Last Name:
+                        <input type="text" value.bind="user.lastName" placeholder="Doe"
+                            focusout.trigger="user.hasChanged('lastName')"
+                            class.bind="user.changed['lastName'] ? (user.isLastNameValid ? 'valid' : 'invalid'): ''"
+                        />
                     </label>
                 </div>
                 <div class="form-row">
-                    <label>Role:
+                    <label><span class="required-field">* </span>Email Address:
+                        <input type="text" class="long-input" value.bind="user.email" placeholder="example@gmail.com"
+                            focusout.trigger="user.hasChanged('email')"
+                            class.bind="user.changed['email'] ? (user.isEmailValid ? 'valid' : 'invalid'): ''"
+                        />
+                    </label>
+                </div>
+                <div class="form-row">
+                    <label><span class="required-field">* </span>Role:
                         <select value.bind="user.role">
                             <option value="Doctor">Doctor</option>
                             <option value="Nurse">Nurse</option>

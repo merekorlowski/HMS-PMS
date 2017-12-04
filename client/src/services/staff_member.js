@@ -8,7 +8,7 @@ export class StaffMemberService {
     }
 
     register(staffMember) {
-        return this.http.fetch('/staff_member', staffMember).then(response => response.json());
+        return this.http.fetch('/staff_member', staffMember).then(response => response.json())
     }
 
 }
