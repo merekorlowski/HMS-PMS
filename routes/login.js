@@ -1,17 +1,36 @@
-/**
- * Load the dependancies
- */
-const express = require('express');
-const router = express.Router();
-const pg = require('pg');
+const express = require('express')
+const router = express.Router()
+ 
+router.get('/login', (req, res) => {
 
+  pg.connect(connectionString, (err, client, done) => {
 
-//PATRICK check les foreign keys for each insert...
-/**
- * Add a Staff
- */
+		// Handle connection errors
+		if(err) {
+			done();
+			console.log(err);
+			return res.status(500).json({success: false, data: err});
+		}
 
- router.post('/staff', (req, res, next) => {
+		//Add a NextOfKin
+		const query = client.query(`
+			SELECT * from HMS-PMS.Staff 
+			WHERE 
+			staffID = '${req.body.roomNumber}'
+			AND 
+			password = '${req.body.roomNumber}';
+			`);
+
+		// After all data is returned, close connection and return results
+		query.on('end', () => {
+			done();
+			return res.json();
+		});
+	});
+  return null
+})
+
+router.post('/register', (req, res, next) => {
 
 	pg.connect(connectionString, (err, client, done) => {
 
@@ -27,7 +46,7 @@ const pg = require('pg');
 		INSERT 
 		INTO HMS-PMS.Staff
 		VALUES (
-		'${req.body.userId}',
+		'${req.body.staffId}',
 		'${req.body.email}',
 		'${req.body.password}',
 		'${req.body.qualifications}',
@@ -41,7 +60,7 @@ const pg = require('pg');
 			INSERT 
 			INTO HMS-PMS.LocalDoctor
 			VALUES (
-			'${req.body.userId}',
+			'${req.body.staffID}',
 			'${req.body.isSpecialiste}'
 			);
 			`;
@@ -53,7 +72,7 @@ const pg = require('pg');
 			INSERT 
 			INTO HMS-PMS.Nurse
 			VALUES (
-			'${req.body.userId}',
+			'${req.body.staffID}',
 			'${req.body.isSpecialiste}'
 			);
 			`;
@@ -65,7 +84,7 @@ const pg = require('pg');
 			INSERT 
 			INTO HMS-PMS.ChargeNurse
 			VALUES (
-			'${req.body.userId}',
+			'${req.body.staffID}',
 			'${req.body.phoneNumber}',
 			'${req.body.bipperExtension}'
 			);
@@ -78,7 +97,7 @@ const pg = require('pg');
 			INSERT 
 			INTO HMS-PMS.Director
 			VALUES (
-			'${req.body.userId}'
+			'${req.body.staffID}'
 			);
 			`;
 		}
@@ -89,7 +108,7 @@ const pg = require('pg');
 			INSERT 
 			INTO HMS-PMS.NonMedical
 			VALUES (
-			'${req.body.userId}'
+			'${req.body.staffID}'
 			);
 			`;
 		}
@@ -100,7 +119,7 @@ const pg = require('pg');
 			INSERT 
 			INTO HMS-PMS.Auxiliary
 			VALUES (
-			'${req.body.userId}',
+			'${req.body.staffID}',
 			'${req.body.isSpecialiste}'
 			);
 			`;
@@ -112,7 +131,7 @@ const pg = require('pg');
 			INSERT 
 			INTO HMS-PMS.PersonnelOfficer
 			VALUES (
-			'${req.body.userId}'
+			'${req.body.staffID}'
 			);
 			`;
 		}
@@ -127,37 +146,4 @@ const pg = require('pg');
 	});
  });
 
- //PATRICK
- /**
- * Get information of division's charge nurse
- */
- router.get('/chargeNurse', (req, res, next) => {
-
-	const results = [];
-
-	pg.connect(connectionString, (err, client, done) => {
-
-		// Handle connection errors
-		if(err) {
-			done();
-			console.log(err);
-			return res.status(500).json({success: false, data: err});
-		}
-
-		const query = client.query(`
-			QUERY F3.4
-			`);
-
-		query.on('row', row => {
-			results.push(row);
-		});
-
-		// After all data is returned, close connection and return results
-		query.on('end', () => {
-			done();
-			return res.json(results);
-		});
-	});
-});
-
- module.exports = router;
+module.exports = router
