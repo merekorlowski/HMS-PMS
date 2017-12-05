@@ -4,7 +4,7 @@ export class Staff {
         if (data) {
             Object.assign(this, data)
         } else {
-            this.staffID = ''
+            this.staffID = 0
             this.password = ''
             this.cpassword = ''
             this.firstName = ''
@@ -20,7 +20,7 @@ export class Staff {
     }
 
     get isStaffIDValid() {
-        let patt = new RegExp('[A-Za-z]([A-Za-z]|[0-9])*')
+        let patt = new RegExp('[0-9]+')
         return this.staffID != '' && patt.test(this.staffID)
     }
 
