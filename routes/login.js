@@ -16,9 +16,9 @@ router.post('/login', (req, res) => {
 		}
 
 		const query = client.query(`
-			SELECT * from HMS_PMS.Staff 
+			SELECT * from hms_pms.staff 
 			WHERE 
-			staffID = '${req.body.staffID}'
+			staffid = ${req.body.staffID}
 			AND 
 			password = '${req.body.password}';
 		`);
@@ -45,9 +45,9 @@ router.post('/register', (req, res, next) => {
 		// Add a Staff
 		let queryText = `
 			INSERT 
-			INTO HMS_PMS.Staff
+			INTO hms_pms.staff
 			VALUES (
-				'${req.body.staffID}',
+				${req.body.staffID},
 				'${req.body.password}',
 				'${req.body.firstName}',
 				'${req.body.lastName}',

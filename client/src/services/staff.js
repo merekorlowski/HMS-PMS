@@ -24,10 +24,10 @@ export class StaffService {
         password: password
       })
 		})
-		// .then(response => response.json()).then(staff => {
-    //   this.key = 'key'//response.key
-    //   this.staff = new Staff(staff)
-    // })
+		.then(response => response.json()).then(staff => {
+      this.key = 'key'//response.key
+      this.staff = new Staff(staff)
+    })
   }
 
   register(staff) {
