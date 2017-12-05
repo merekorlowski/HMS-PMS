@@ -19,7 +19,7 @@ const app = express()
 
 // set up database
 const pg = require('pg');
-const connectionString = process.env.DATABASE_URL || config.dbUrl;
+const connectionString = /*process.env.DATABASE_URL ||*/ config.dbUrl;
 const client = new pg.Client(connectionString);
 client.connect();
 
