@@ -3,7 +3,6 @@ import environment from './environment'
 export function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
-    .plugin('aurelia-validation')
     .feature('resources')
 
   if (environment.debug) {
