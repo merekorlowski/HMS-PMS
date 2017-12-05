@@ -1,30 +1,33 @@
 import {inject} from 'aurelia-framework'
-import {HttpClient} from 'aurelia-fetch-client'
+import {HttpClient, json} from 'aurelia-fetch-client'
 import {Patient} from '../models/patient'
 
-@inject(HttpClient)
 export class PatientService {
-    constructor(http) {
-        this.http = http
-        this.tempPatient = new Patient()
-        this.tempPatient.patientID = '1231231'
-        this.tempPatient.firstName = 'John'
-        this.tempPatient.lastName = 'Doe'
-        this.tempPatient.telephone = '1119876543'
-        this.tempPatient.externalDoctorID = '4324324'
-        this.tempPatient.address.line1 = '123 Nicholas Ave'
-        this.tempPatient.address.city = 'Ottawa'
-        this.tempPatient.address.postalCode = 'K1N9G3'
-        this.tempPatient.maritalStatus = 'Married'
-        this.tempPatient.gender = 'Male'
-        this.tempPatient.dateOfBirth = '21/02/1996'
-        this.tempPatient.nextOfKin.firstName = 'Jane'
-        this.tempPatient.nextOfKin.lastName = 'Doe'
-        this.tempPatient.nextOfKin.relationshipToPatient = 'Wife'
-        this.tempPatient.nextOfKin.telephone = '1111234567'
-        this.tempPatient.nextOfKin.address.line1 = '123 Nicholas Ave'
-        this.tempPatient.nextOfKin.address.city = 'Ottawa'
-        this.tempPatient.nextOfKin.address.postalCode = 'K1N9G3'
+    constructor() {
+        this.http = new HttpClient().configure(config => {
+            config.withBaseUrl('http://localhost:3000');
+        })
+
+        this.tempPatient = new Patient({
+            patientID: '1231231',
+            firstName: 'John',
+            lastName: 'Doe',
+            phoneNumber: '1119876543',
+            externalDoctorID: '4324324',
+            line1: '123 Nicholas Ave',
+            city: 'Ottawa',
+            postalCode: 'K1N9G3',
+            maritalStatus: 'Married',
+            gender: 'Male',
+            dateOfBirth: '21/02/1996',
+            nofFirstName: 'Jane',
+            nofLastName: 'Doe',
+            nofRelationship: 'Wife',
+            nofPhoneNumber: '1111234567',
+            nofLine1: '123 Nicholas Ave',
+            nofCity: 'Ottawa',
+            nofPostalCode: 'K1N9G3'
+        })
     }
 
     getPatients() {
@@ -32,7 +35,10 @@ export class PatientService {
     }
 
     register(patient) {
-        return this.http.fetch('/patient', patient).then(response => response.json())
+        return this.http.fetch('/patient', {
+            method: 'post',
+            body: json(patient)
+        }).then(response => response.json())
     }
 
     consult(patientID) {
@@ -41,8 +47,11 @@ export class PatientService {
 
     admitPatient(patient, admissionInfo) {
         return this.http.fetch('/patient/admit', {
-           patient: patient,
-           admissionInfo: admissionInfo 
+            method: 'post',
+            body: {
+                patient: json(patient),
+                admissionInfo: json(admissionInfo)
+            }
         }).then(response => response.json())
     }
 
