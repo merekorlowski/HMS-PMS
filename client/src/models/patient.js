@@ -1,21 +1,27 @@
 import {Address} from './address'
-import {NextOfKin} from './nextOfKin'
 
 export class Patient {
-    constructor() {
-        this.patientID = ''
-        this.firstName = ''
-        this.lastName = ''
-        this.address = new Address()
-        this.telephone = ''
-        this.dateOfBirth = ''
-        this.gender = 'M'
-        this.maritalStatus = 'S'
-        this.externalDoctorID = ''
-        this.nextOfKin = new NextOfKin()
-        this.isAdmitted = false
+    constructor(data) {
+        if (data) {
+            Object.assign(this, data)
+        } else {
+            this.patientID = ''
+            this.firstName = ''
+            this.lastName = ''
+            this.address = new Address()
+            this.phoneNumber = ''
+            this.dateOfBirth = ''
+            this.gender = 'M'
+            this.maritalStatus = 'S'
+            this.externalDoctorID = ''
+            this.nofFirstName = ''
+            this.nofLastName = ''
+            this.nofRelationship = ''
+            this.nofAddress = new Address()
+            this.nofPhoneNumber = ''
+            this.isAdmitted = false
+        }
         this.changed = {}
-        this.getPrescriptions()
     }
 
     hasChanged(attribute) {
@@ -34,9 +40,9 @@ export class Patient {
         return this.lastName != ''
     }
 
-    get isTelephoneValid() {
+    get isPhoneNumberValid() {
         let patt = new RegExp('[1-9](([0-9]{9})|([0-9]{10}))');
-        return patt.test(this.telephone)
+        return patt.test(this.phoneNumber)
     }
 
     get isDateOfBirthValid() {
@@ -48,21 +54,38 @@ export class Patient {
         return this.externalDoctorID != ''
     }
 
+    get isNofFirstNameValid() {
+        return this.nofFirstName != ''
+    }
+
+    get isNofLastNameValid() {
+        return this.nofLastName != ''
+    }
+
+    get isNofRelationshipValid() {
+        return this.nofRelationship != ''
+    }
+
+    get isNofPhoneNumberValid() {
+        let patt = new RegExp('[1-9](([0-9]{9})|([0-9]{10}))');
+        return patt.test(this.nofPhoneNumber)
+    }
+
     isValid() {
         return (
             this.isPatientIDValid &&
             this.isFirstNameValid &&
             this.isLastNameValid &&
-            this.isTelephoneValid &&
+            this.isPhoneNumberValid &&
             this.isDateOfBirthValid &&
             this.isExternalDoctorIDValid &&
             this.address.isValid() &&
-            this.nextOfKin.isValid()
+            this.isNofFirstNameValid &&
+            this.isNofLastNameValid &&
+            this.isNofRelationshipValid &&
+            this.nofAddress.isValid() &&
+            this.isNofPhoneNumberValid
         )
-    }
-
-    getPrescriptions() {
-
     }
 
 }
