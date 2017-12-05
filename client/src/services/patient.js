@@ -1,11 +1,12 @@
 import {inject} from 'aurelia-framework'
 import {HttpClient, json} from 'aurelia-fetch-client'
 import {Patient} from '../models/patient'
+import {config} from '../config'
 
 export class PatientService {
     constructor() {
         this.http = new HttpClient().configure(config => {
-            config.withBaseUrl('http://localhost:3000');
+            config.withBaseUrl(config.baseUrl);
         })
 
         this.tempPatient = new Patient({

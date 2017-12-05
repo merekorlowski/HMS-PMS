@@ -4,11 +4,12 @@
 import {inject} from 'aurelia-framework'
 import {HttpClient} from 'aurelia-fetch-client'
 import {Division} from '../models/division'
+import {config} from '../config'
 
 export class DivisionService {
     constructor() {
         this.http = new HttpClient().configure(config => {
-            config.withBaseUrl('http://localhost:3000');
+            config.withBaseUrl(config.baseUrl);
         })
         this.tempDivision = new Division()
         this.tempDivision.divisionID= "123456"
