@@ -1,16 +1,16 @@
 <template>
     <require from="./styles.css"></require>
     <header>
-        <h1>HMS-PMS</h1>
+        <h1>HMS_PMS</h1>
         <span id="userIcon">
             <i class="material-icons">person_pin</i>
-            <span id="username">${session.user.userID}</span>
+            <span id="username">${staffService.staff.staffID}</span>
             <i class="material-icons" id="toggleMenuIcon" click.trigger="toggleMenu()">
                 ${menuIsVisible ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}
             </i>
         </span>
         <ul id="menu" if.bind="menuIsVisible">
-            <li click.trigger="session.logout()">Logout</li>
+            <li click.trigger="staffService.logout()">Logout</li>
         </ul>
     </header>
     <nav>

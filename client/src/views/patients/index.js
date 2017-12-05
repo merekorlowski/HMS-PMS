@@ -59,12 +59,12 @@ export class Patients {
 
     register() {
         if (this.newPatient.isValid()) {
-            //this.patientService.register(this.newPatient).then(() => {
+            this.patientService.register(this.newPatient).then(() => {
                 this.isDisplayingRegistrationForm = false
                 this.patients.push(this.newPatient)
-            //}).catch(err => {
+            }).catch(err => {
 
-            //})
+            })
         }
     }
 
