@@ -1,3 +1,3 @@
 module.exports = {
-    dbUrl: 'postgres://postgres:password@localhost:5432/hms_pms'
+    dbUrl: 'postgres://postgres@localhost:5432/hms_pms'
 }
