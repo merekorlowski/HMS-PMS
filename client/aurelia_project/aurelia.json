@@ -1,5 +1,5 @@
 {
-  "name": "HMS-PMS",
+  "name": "HMS_PMS",
   "type": "project:application",
   "bundler": {
     "id": "cli",
@@ -83,11 +83,6 @@
             "path": "../node_modules/aurelia-testing/dist/amd",
             "main": "aurelia-testing",
             "env": "dev"
-          },
-          {
-            "name": "aurelia-validation",
-            "path": "../node_modules/aurelia-validation/dist/amd",
-            "main": "aurelia-validation"
           },
           "text"
         ]

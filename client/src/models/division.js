@@ -1,14 +1,18 @@
 import {ChargeNurse} from './chargeNurse'
 
 export class Division {
-    constructor() {
-        this.divisionID = ''
-        this.name = ''
-        this.chargeNurse = new ChargeNurse()
-        this.location = ''
-        this.numOfBeds = -1
-        this.numOfOcuppentBeds = -1
-        this.telephoneExtension = ''
+    constructor(data) {
+        if (data) {
+            Object.assign(this, data)
+        } else {
+            this.divisionID = ''
+            this.name = ''
+            this.chargeNurseID = ''
+            this.location = ''
+            this.numOfBeds = -1
+            this.numOfOcuppentBeds = -1
+            this.telephoneExtension = ''
+        }
     }
 
     get isComplete() {

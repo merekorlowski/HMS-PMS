@@ -6,52 +6,52 @@
             <h3 class="page-title">Patient Management System (PMS)</h3>
             <div class="content">
                 <div class="form-row">
-                    <label><span class="required-field">* </span>User ID:
-                        <input type="text" value.bind="user.userID" placeholder="Must be unique"
-                            focusout.trigger="user.hasChanged('userID')"
-                            class.bind="user.changed['userID'] ? (user.isUserIDValid ? 'valid' : 'invalid'): ''"
+                    <label><span class="required-field">* </span>Staff ID:
+                        <input type="text" value.bind="staff.staffID" placeholder="Must be unique"
+                            focusout.trigger="staff.hasChanged('staffID')"
+                            class.bind="staff.changed['staffID'] ? (staff.isStaffIDValid ? 'valid' : 'invalid'): ''"
                         />
                     </label>
                 </div>
                 <div class="form-row">
                     <label><span class="required-field">* </span>Password:
-                        <input type="password" value.bind="user.password" placeholder="Must be alphanumeric"
-                            focusout.trigger="user.hasChanged('password')"
-                            class.bind="user.changed['password'] ? (user.isPasswordValid ? 'valid' : 'invalid'): ''"
+                        <input type="password" value.bind="staff.password" placeholder="Must be alphanumeric"
+                            focusout.trigger="staff.hasChanged('password')"
+                            class.bind="staff.changed['password'] ? (staff.isPasswordValid ? 'valid' : 'invalid'): ''"
                         />
                     </label>
                     <label><span class="required-field">* </span>Confirm Password:
-                        <input type="password" value.bind="user.cpassword" placeholder="Must match password"
-                            focusout.trigger="user.hasChanged('cpassword')"
-                            class.bind="user.changed['cpassword'] ? (user.isCPasswordValid ? 'valid' : 'invalid'): ''"
+                        <input type="password" value.bind="staff.cpassword" placeholder="Must match password"
+                            focusout.trigger="staff.hasChanged('cpassword')"
+                            class.bind="staff.changed['cpassword'] ? (staff.isCPasswordValid ? 'valid' : 'invalid'): ''"
                         />
                     </label>
                 </div>
                 <div class="form-row">
                     <label><span class="required-field">* </span>First Name:
-                        <input type="text" value.bind="user.firstName" placeholder="John"
-                            focusout.trigger="user.hasChanged('firstName')"
-                            class.bind="user.changed['firstName'] ? (user.isFirstNameValid ? 'valid' : 'invalid'): ''"
+                        <input type="text" value.bind="staff.firstName" placeholder="John"
+                            focusout.trigger="staff.hasChanged('firstName')"
+                            class.bind="staff.changed['firstName'] ? (staff.isFirstNameValid ? 'valid' : 'invalid'): ''"
                         />
                     </label>
                     <label><span class="required-field">* </span>Last Name:
-                        <input type="text" value.bind="user.lastName" placeholder="Doe"
-                            focusout.trigger="user.hasChanged('lastName')"
-                            class.bind="user.changed['lastName'] ? (user.isLastNameValid ? 'valid' : 'invalid'): ''"
+                        <input type="text" value.bind="staff.lastName" placeholder="Doe"
+                            focusout.trigger="staff.hasChanged('lastName')"
+                            class.bind="staff.changed['lastName'] ? (staff.isLastNameValid ? 'valid' : 'invalid'): ''"
                         />
                     </label>
                 </div>
                 <div class="form-row">
                     <label><span class="required-field">* </span>Email Address:
-                        <input type="text" class="long-input" value.bind="user.email" placeholder="example@gmail.com"
-                            focusout.trigger="user.hasChanged('email')"
-                            class.bind="user.changed['email'] ? (user.isEmailValid ? 'valid' : 'invalid'): ''"
+                        <input type="text" class="long-input" value.bind="staff.email" placeholder="example@gmail.com"
+                            focusout.trigger="staff.hasChanged('email')"
+                            class.bind="staff.changed['email'] ? (staff.isEmailValid ? 'valid' : 'invalid'): ''"
                         />
                     </label>
                 </div>
                 <div class="form-row">
                     <label><span class="required-field">* </span>Role:
-                        <select value.bind="user.role">
+                        <select value.bind="staff.role">
                             <option value="Doctor">Doctor</option>
                             <option value="Nurse">Nurse</option>
                             <option value="Personel Officer">Personel Officer</option>

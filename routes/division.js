@@ -4,6 +4,8 @@
 const express = require('express');
 const router = express.Router();
 const pg = require('pg');
+const config = require('../config')
+const connectionString = process.env.DATABASE_URL || config.dbUrl
 
 /**
 * PATRICK - Foreign keys dans creation de Division
@@ -25,7 +27,7 @@ router.post('/division', (req, res, next) => {
 		//Add a Division
 		let queryText = `
 		INSERT 
-		INTO HMS-PMS.Division
+		INTO HMS_PMS.Division
 		VALUES (
 		'${req.body.divisionID}',
 		'${req.body.divisionName}',
@@ -40,7 +42,7 @@ router.post('/division', (req, res, next) => {
 		if (req.body.role === 'Ward') {
 			queryText += `
 			INSERT 
-			INTO HMS-PMS.Ward
+			INTO HMS_PMS.Ward
 			VALUES (
 			'${req.body.divisionID}',
 			'${req.body.typeOfCare}'
@@ -52,7 +54,7 @@ router.post('/division', (req, res, next) => {
 		else if (req.body.role === 'OutPatientClinic') {
 			queryText += `
 			INSERT 
-			INTO HMS-PMS.OutPatientClinic
+			INTO HMS_PMS.OutPatientClinic
 			VALUES (
 			'${req.body.divisionID}'
 			);

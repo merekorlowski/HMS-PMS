@@ -1,7 +1,7 @@
-SET search_path = "HMS-PMS"  ; 
+SET search_path = "HMS_PMS"; 
 
-DROP SCHEMA IF EXISTS "HMS-PMS" CASCADE  ;
-CREATE SCHEMA "HMS-PMS";
+DROP SCHEMA IF EXISTS "HMS_PMS" CASCADE;
+CREATE SCHEMA "HMS_PMS";
 
 CREATE TABLE "AccessorySupply" (
     "SupplyID" integer NOT NULL,
@@ -88,7 +88,7 @@ CREATE TABLE "Patient" (
     "PrivateInsurrance" character varying NOT NULL,
     "nofFirstName" character varying NOT NULL,
     "nofLastName" character varying NOT NULL,
-    "Relationship" character(1) NOT NULL,
+    "nofRelationship" character NOT NULL,
     "nofAddress" character varying NOT NULL,
     "nofPhoneNumber" integer NOT NULL
 );
@@ -147,12 +147,11 @@ CREATE TABLE "Shift" (
 
 CREATE TABLE "Staff" (
     "StaffID" integer NOT NULL,
-    "Email" character varying NOT NULL,
     "Password" character varying NOT NULL,
-    "Qualifications" text NOT NULL,
-    "WorkExperience" text NOT NULL,
     "FirstName" character varying NOT NULL,
-    "LastName" character varying NOT NULL
+    "LastName" character varying NOT NULL,
+    "Email" character varying NOT NULL,
+    "Role" character varying NOT NULL
 );
 
 

@@ -3,6 +3,9 @@
  */
 const express = require('express');
 const router = express.Router();
+const pg = require('pg');
+const config = require('../config')
+const connectionString = process.env.DATABASE_URL || config.dbUrl
 
 /**
 * Get Patient Prescriptions
@@ -22,7 +25,7 @@ router.get('/prescriptions', (req, res) => {
 
 		const query = client.query(`
 			SELECT *
-			FROM HMS-PMS.Prescription
+			FROM HMS_PMS.Prescription
 			WHERE patientID='${req.body.patientID}';
 			`);
 
@@ -57,7 +60,7 @@ router.get('/prescription', (req, res) => {
 
 		const query = client.query(`
 			SELECT *
-			FROM HMS-PMS.Prescription
+			FROM HMS_PMS.Prescription
 			WHERE prescriptionID='${req.body.prescriptionID}';
 			`);
 
@@ -90,7 +93,7 @@ router.post('/prescription', (req, res) => {
 		//Add a MedicalSupply
 		let queryText = `
 		INSERT 
-			INTO HMS-PMS.Prescription(
+			INTO HMS_PMS.Prescription(
 			unitsByDay,
 			numOfAdministrationPerDay,
 			methodOfAdministration,
@@ -139,7 +142,7 @@ router.put('/prescription', (req, res, next) => {
 		}
 
 		const query = client.query(`
-			UPDATE HMS-PMS.Prescription 			
+			UPDATE HMS_PMS.Prescription 			
 			SET 
 			unitsByDay= '${req.body.unitsByDay}',
 			numOfAdministrationPerDay='${req.body.numOfAdministrationPerDay}',
@@ -180,7 +183,7 @@ router.delete('/prescription', (req, res, next) => {
 		}
 
 		const query = client.query(`
-			DELETE FROM HMS-PMS.Prescription 
+			DELETE FROM HMS_PMS.Prescription 
 			WHERE prescriptionID = '${req.body.prescriptionID}';
 			`);
 
@@ -211,8 +214,8 @@ router.get('/medications', (req, res) => {
 
 		const query = client.query(`
 			SELECT drugID,supplyName
-			FROM HMS-PMS.PharmaceuticalSupply 
-			NATURAL JOIN HMS-PMS.MedicalSupply;
+			FROM HMS_PMS.PharmaceuticalSupply 
+			NATURAL JOIN HMS_PMS.MedicalSupply;
 			`);
 
 		query.on('row', row => {

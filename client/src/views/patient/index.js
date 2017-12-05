@@ -1,12 +1,12 @@
 import {inject} from 'aurelia-framework'
-import {Session} from '../../services/session'
+import {StaffService} from '../../services/staff'
 import {PatientService} from '../../services/patient'
 import {Prescription} from '../../models/prescription'
 
-@inject(Session, PatientService)
+@inject(StaffService, PatientService)
 export class PatientFile {
-    constructor(session, patientService) {
-        this.session = session
+    constructor(staffService, patientService) {
+        this.staffService = staffService
         this.patientService = patientService
         this.patient = this.patientService.tempPatient
         this.isAdmittingPatient = false
@@ -49,8 +49,8 @@ export class PatientFile {
         this.step = 1
     }
 
-    isUserDoctor() {
-        return this.session.user.role === 'Doctor'
+    isStaffDoctor() {
+        return this.staffService.staff.role === 'Doctor'
     }
 
     displayAdmitPatientForm() {
