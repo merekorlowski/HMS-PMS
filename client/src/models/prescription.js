@@ -26,19 +26,31 @@ export class Prescription {
     get isStartDateValid() {
         return this.startDate != ''
     }
-    get isdrugNumberValid() {
+    get isDrugNumberValid() {
         return this.drugNumber != ''
     }
-    get isdrugNameValid() {
+    get isDrugNameValid() {
         return this.drugName != ''
     }
-    get isunitsByDayValid() {
+    get isUnitsByDayValid() {
         return this.unitsByDay != 0
     }
-    get isnumAdministrationPerDayeValid() {
+    get isNumAdministrationPerDayeValid() {
         return this.numAdministrationPerDay != 0
     }
-    get isadministrationsValid() {
+    get isAministrationsValid() {
         return this.administrations != null
+    }
+    isValid() {
+        return (
+            this.isEndDateValid &&
+            this.isStartDateBfEndDate &&
+            this.isStartDateValid &&
+            this.isDrugNumberValid &&
+            this.isDrugNameValid &&
+            this.isUnitsByDayValid &&
+            this.isNumAdministrationPerDayeValid &&
+            this.isAministrationsValid
+        )
     }
 }

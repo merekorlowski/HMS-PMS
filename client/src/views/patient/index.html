@@ -9,37 +9,37 @@
         <h2>${patient.lastName}, ${patient.firstName}</h2>
         <hr/>
         <button id="editFileBtn" class="btn" click.trigger="displayUpdatePatientForm()"><i class="material-icons">edit</i></button>          
-        <div class="patient-info">
+        <div class="division-info">
             <strong>Government Insurance Number:</strong> ${patient.patientID}
         </div>
-        <div class="patient-info">
+        <div class="division-info">
             <strong>Phone Number:</strong> ${patient.telephone}
         </div>
-        <div class="patient-info">
+        <div class="division-info">
             <strong>Address:</strong> ${patient.address.line1}, ${patient.address.city} (${patient.address.postalCode})
         </div>
-        <div class="patient-info">
+        <div class="division-info">
             <strong>Date Of Birth:</strong> ${patient.dateOfBirth}
         </div>
-        <div class="patient-info">
+        <div class="division-info">
             <strong>Gender:</strong> ${patient.gender}
         </div>
-        <div class="patient-info">
+        <div class="division-info">
             <strong>Marital Status:</strong> ${patient.maritalStatus}
         </div>
-        <div class="patient-info">
+        <div class="division-info">
             <strong>External Doctor ID:</strong> ${patient.externalDoctorID}
         </div>
         <h3>Next Of Kin</h3>
         <hr/>
         <h4>${patient.nextOfKin.lastName}, ${patient.nextOfKin.firstName}</h4>
-        <div class="patient-info">
+        <div class="division-info">
             <strong>Phone Number:</strong> ${patient.nextOfKin.telephone}
         </div>
-        <div class="patient-info">
+        <div class="division-info">
             <strong>Address:</strong> ${patient.nextOfKin.address.line1}, ${patient.nextOfKin.address.city} (${patient.nextOfKin.address.postalCode})
         </div>
-        <div class="patient-info">
+        <div class="division-info">
             <strong>Relationship to Patient:</strong> ${patient.nextOfKin.relationshipToPatient}
         </div>
         <h4>Prescriptions</h4>

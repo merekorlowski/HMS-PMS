@@ -18,4 +18,5 @@ export class Division {
     get isDivisionIDValid() {
         return this.divisionID != ''
     }
+
 }
