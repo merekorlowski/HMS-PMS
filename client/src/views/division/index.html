@@ -1,3 +1,20 @@
 <template>
-    
+    <require from="./styles.css"></require>
+    <div id="DivisionFile">
+        <h2>${division.name}, ${division.divisionID}</h2>
+        <hr/>
+        <button id="editFileBtn" class="btn" click.trigger="displayUpdatePatientForm()"><i class="material-icons">edit</i></button>
+        <div class="division-info">
+            <strong>Phone Extension:</strong> ${division.telephoneExtension}
+        </div>
+        <div class="division-info">
+            <strong>Block Location:</strong> ${division.location}
+        </div>
+        <div class="division-info">
+            <strong>Number Of Total Beds:</strong> ${division.numOfBeds}
+        </div>
+        <div class="division-info">
+            <strong>Number Of Occupent Beds:</strong> ${division.numOfOcuppentBeds}
+        </div>
+    </div>
 </template>

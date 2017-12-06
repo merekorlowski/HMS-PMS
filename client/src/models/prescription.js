@@ -51,4 +51,16 @@ export class Prescription {
     get isAdministrationsValid() {
         return this.administrations != null
     }
+    isValid() {
+        return (
+            this.isEndDateValid &&
+            this.isStartDateBfEndDate &&
+            this.isStartDateValid &&
+            this.isDrugNumberValid &&
+            this.isDrugNameValid &&
+            this.isUnitsByDayValid &&
+            this.isNumAdministrationPerDayeValid &&
+            this.isAministrationsValid
+        )
+    }
 }
