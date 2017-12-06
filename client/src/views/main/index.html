@@ -4,7 +4,7 @@
         <h1>HMS_PMS</h1>
         <span id="userIcon">
             <i class="material-icons">person_pin</i>
-            <span id="username">${staffService.staff.staffID}</span>
+            <span id="username">${staffService.staff.lastName}, ${staffService.staff.firstName}</span>
             <i class="material-icons" id="toggleMenuIcon" click.trigger="toggleMenu()">
                 ${menuIsVisible ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}
             </i>

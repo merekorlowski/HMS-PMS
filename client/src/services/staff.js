@@ -2,16 +2,19 @@ import {inject} from 'aurelia-framework'
 import {HttpClient, json} from 'aurelia-fetch-client'
 import {Router} from 'aurelia-router'
 
+import {Toaster} from './toaster'
 import {Staff} from '../models/staff'
 import {config} from '../config'
 
-@inject(Router)
+@inject(Router, Toaster)
 export class StaffService {
-  constructor(router) {
+  constructor(router, toaster) {
     this.http = new HttpClient().configure(config => {
       config.withBaseUrl(config.baseUrl);
     })
-    this.router = router
+		this.router = router
+		this.toaster = toaster
+		this.staffID = ''
     this.key = null
     this.staff = null
   }
@@ -23,24 +26,19 @@ export class StaffService {
         staffID: staffID,
         password: password
       })
-		})
-		.then(response => response.json()).then(staff => {
-      this.key = 'key'//response.key
-      this.staff = new Staff(staff)
-    })
+		}).then(response => response.json())
   }
 
   register(staff) {
     return this.http.fetch('/register', {
       method: 'post',
       body: json(staff)
-    }).then(response => response.json()).then(staff => {
-      this.staff = new Staff(staff)
-    })
+    }).then(response => response.json())
   }
 
   logout(staff) {
-    this.key = null
+		this.key = null
+		this.staff = null
     this.router.navigate('login')
   }
 

@@ -19,13 +19,9 @@ export class Patients {
     }
 
     getPatients() {
-        //this.patientService.getPatients().then(patients => {
-        //    this.patients = patients
-        for (let i = 0; i < 20; i++) {
-            this.tempPatient = this.patientService.tempPatient
-            this.patients.push(this.tempPatient)
-        }
-        //})
+        this.patientService.getPatients().then(patients => {
+            this.patients = patients
+        })
     }
 
     search() {

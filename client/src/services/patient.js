@@ -8,27 +8,6 @@ export class PatientService {
         this.http = new HttpClient().configure(config => {
             config.withBaseUrl(config.baseUrl);
         })
-
-        this.tempPatient = new Patient({
-            patientID: '1231231',
-            firstName: 'John',
-            lastName: 'Doe',
-            phoneNumber: '1119876543',
-            externalDoctorID: '4324324',
-            line1: '123 Nicholas Ave',
-            city: 'Ottawa',
-            postalCode: 'K1N9G3',
-            maritalStatus: 'Married',
-            gender: 'Male',
-            dateOfBirth: '21/02/1996',
-            nofFirstName: 'Jane',
-            nofLastName: 'Doe',
-            nofRelationship: 'Wife',
-            nofPhoneNumber: '1111234567',
-            nofLine1: '123 Nicholas Ave',
-            nofCity: 'Ottawa',
-            nofPostalCode: 'K1N9G3'
-        })
     }
 
     getPatients() {
@@ -40,7 +19,14 @@ export class PatientService {
             method: 'post',
             body: json(patient)
         }).then(response => response.json())
-    }
+		}
+		
+		update(patient) {
+			return this.http.fetch('/patient', {
+				method: 'put',
+				body: json(patient)
+			}).then(response => response.json())
+		}
 
     consult(patientID) {
         return this.http.fetch(`/patient?patientID=${patientID}`).then(response => response.json())

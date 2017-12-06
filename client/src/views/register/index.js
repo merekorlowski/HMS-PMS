@@ -17,9 +17,10 @@ export class Register {
         if (this.staff.isValid()) {
             this.staffService.register(this.staff).then(success => {
                 this.toaster.add({
-                    text: `Successfully registered staff: ${this.staff.staffID}.`,
+                    text: `Successfully registered. Your staff ID is: ${success.staffID}.`,
                     type: 'success'
-                })
+								})
+								this.staffID = success.staffID
                 this.router.navigate('login')
             }).catch(err => {
                 // display er

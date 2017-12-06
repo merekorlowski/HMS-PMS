@@ -27,7 +27,8 @@ export class App {
       { route: 'login', moduleId: 'views/login/index', title: 'Login' },
       { route: 'register', moduleId: 'views/register/index', title: 'Register' },
       { route: 'PMS', name: 'main', moduleId: 'views/main/index' }
-    ])
+		])
+
     this.router = router
   }
 

@@ -1,7 +1,10 @@
 
 #registerWrapper {
-    width: 650px;
-    margin: 100px auto;
+		width: 650px;
+		position: absolute;
+		left: 50%;
+		margin-left: -325px;
+		top: 100px;
 }
 
 #registerWrapper .page-title {

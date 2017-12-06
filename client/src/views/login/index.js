@@ -1,14 +1,17 @@
 import {inject} from 'aurelia-framework'
 import {Router} from 'aurelia-router'
 import {StaffService} from '../../services/staff'
+import {Toaster} from '../../services/toaster'
+import {Staff} from '../../models/staff'
 
-@inject(StaffService, Router)
+@inject(StaffService, Router, Toaster)
 export class Login {
-  constructor(staffService, router) {
+  constructor(staffService, router, toaster) {
     this.staffService = staffService
-    this.router = router
-    this.staffID = ''//this.staffService.staff.staffID || ''
-    this.password = ''//this.staffService.staff.password || ''
+		this.router = router
+		this.toaster = toaster
+    this.staffID = this.staffService.staffID
+    this.password = ''
     this.invalidStaffID = false
     this.invalidPassword = false
   }
@@ -23,9 +26,22 @@ export class Login {
     }
 
     if (!this.invalidStaffID && !this.invalidPassword) {
-      this.staffService.login(this.staffID, this.password).then(() => {
-        this.router.navigate('PMS')
-      })
+      this.staffService.login(this.staffID, this.password).then(staff => {
+				if (staff.err) {
+					this.toaster.add({
+						type: 'error',
+						text: staff.err
+					})
+				} else {
+					this.staffService.staff = new Staff(staff)
+					this.router.navigate('PMS')
+				}
+			}).catch(err => {
+				this.toaster.add({
+					type: 'error',
+					text: err.data
+				})
+			})
     }
   }
 

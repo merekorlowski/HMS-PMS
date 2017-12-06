@@ -6,14 +6,6 @@
             <h3 class="page-title">Patient Management System (PMS)</h3>
             <div class="content">
                 <div class="form-row">
-                    <label><span class="required-field">* </span>Staff ID:
-                        <input type="text" value.bind="staff.staffID" placeholder="Must be unique"
-                            focusout.trigger="staff.hasChanged('staffID')"
-                            class.bind="staff.changed['staffID'] ? (staff.isStaffIDValid ? 'valid' : 'invalid'): ''"
-                        />
-                    </label>
-                </div>
-                <div class="form-row">
                     <label><span class="required-field">* </span>Password:
                         <input type="password" value.bind="staff.password" placeholder="Must be alphanumeric"
                             focusout.trigger="staff.hasChanged('password')"
