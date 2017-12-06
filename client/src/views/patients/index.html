@@ -52,9 +52,9 @@
                 </div>
                 <div class="form-row">
                 <label><span class="required-field">* </span>Telephone Number:
-                    <input type="text" class="input-short" value.bind="newPatient.telephone" placeholder="6131234567"
-                    focusout.trigger="newPatient.hasChanged('telephone')"
-                    class.bind="newPatient.changed['telephone'] ? (newPatient.isTelephoneValid ? 'valid' : 'invalid'): ''"
+                    <input type="text" class="input-short" value.bind="newPatient.phoneNumber" placeholder="6131234567"
+                    focusout.trigger="newPatient.hasChanged('phoneNumber')"
+                    class.bind="newPatient.changed['phoneNumber'] ? (newPatient.isPhoneNumberValid ? 'valid' : 'invalid'): ''"
                     />
                 </label>
                 </div>
@@ -159,9 +159,9 @@
                 </div>
                 <div>
                 <label><span class="required-field">* </span>Telephone Number:
-                    <input type="text" placeholder="6131234567" value.bind="newPatient.nextOfKin.telephone"
-                    focusout.trigger="newPatient.nextOfKin.hasChanged('telephone')"
-                    class.bind="newPatient.nextOfKin.changed['telephone'] ? (newPatient.nextOfKin.isTelephoneValid ? 'valid' : 'invalid'): ''"
+                    <input type="text" placeholder="6131234567" value.bind="newPatient.nextOfKin.phoneNumber"
+                    focusout.trigger="newPatient.nextOfKin.hasChanged('phoneNumber')"
+                    class.bind="newPatient.nextOfKin.changed['phoneNumber'] ? (newPatient.nextOfKin.isPhoneNumberValid ? 'valid' : 'invalid'): ''"
                     />
                 </label>
                 </div>

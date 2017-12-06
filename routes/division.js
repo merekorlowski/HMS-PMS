@@ -14,61 +14,62 @@ const connectionString = process.env.DATABASE_URL || config.dbUrl
 * Create a Division
 */
 router.post('/division', (req, res, next) => {
+	
 
-	pg.connect(connectionString, (err, client, done) => {
+	// pg.connect(connectionString, (err, client, done) => {
 
-		// Handle connection errors
-		if(err) {
-			done();
-			console.log(err);
-			return res.status(500).json({success: false, data: err});
-		}
+	// 	// Handle connection errors
+	// 	if(err) {
+	// 		done();
+	// 		console.log(err);
+	// 		return res.status(500).json({success: false, data: err});
+	// 	}
 
-		//Add a Division
-		let queryText = `
-		INSERT 
-		INTO HMS_PMS.Division
-		VALUES (
-		'${req.body.divisionID}',
-		'${req.body.divisionName}',
-		'${req.body.location}',
-		'${req.body.numOfBeds}',
-		'${req.body.phoneExtension}',
-		'${req.body.status}'
-		);
-		`;
+	// 	//Add a Division
+	// 	let queryText = `
+	// 	INSERT 
+	// 	INTO HMS_PMS.Division
+	// 	VALUES (
+	// 	'${req.body.divisionID}',
+	// 	'${req.body.divisionName}',
+	// 	'${req.body.location}',
+	// 	'${req.body.numOfBeds}',
+	// 	'${req.body.phoneExtension}',
+	// 	'${req.body.status}'
+	// 	);
+	// 	`;
 
-		// Add a Ward
-		if (req.body.role === 'Ward') {
-			queryText += `
-			INSERT 
-			INTO HMS_PMS.Ward
-			VALUES (
-			'${req.body.divisionID}',
-			'${req.body.typeOfCare}'
-			);
-			`;
-		}
+	// 	// Add a Ward
+	// 	if (req.body.role === 'Ward') {
+	// 		queryText += `
+	// 		INSERT 
+	// 		INTO HMS_PMS.Ward
+	// 		VALUES (
+	// 		'${req.body.divisionID}',
+	// 		'${req.body.typeOfCare}'
+	// 		);
+	// 		`;
+	// 	}
 
-		// Add an OutPatientClinic
-		else if (req.body.role === 'OutPatientClinic') {
-			queryText += `
-			INSERT 
-			INTO HMS_PMS.OutPatientClinic
-			VALUES (
-			'${req.body.divisionID}'
-			);
-			`;
-		}
+	// 	// Add an OutPatientClinic
+	// 	else if (req.body.role === 'OutPatientClinic') {
+	// 		queryText += `
+	// 		INSERT 
+	// 		INTO HMS_PMS.OutPatientClinic
+	// 		VALUES (
+	// 		'${req.body.divisionID}'
+	// 		);
+	// 		`;
+	// 	}
 
-		const query = client.query(queryText);
+	// 	const query = client.query(queryText);
 
-		// After all data is returned, close connection and return results
-		query.on('end', () => {
-			done();
-			return res.json();
-		});
-	});
+	// 	// After all data is returned, close connection and return results
+	// 	query.on('end', () => {
+	// 		done();
+	// 		return res.json();
+	// 	});
+	// });
 });
 
 //PATRICK

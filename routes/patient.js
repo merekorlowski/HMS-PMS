@@ -9,6 +9,20 @@ const connectionString = process.env.DATABASE_URL || config.dbUrl
 
 const patients = require('../patients')
 
+router.get('/patient', (req, res) => {
+	
+	let id = req.query.patientID
+
+	for (let p of patients) {
+		if (p.patientID === id) {
+			return res.json(p)
+		}
+	}
+
+	return res.json()
+
+})
+
 /**
 * Add a Patient with his NextOfKin
 */
@@ -112,7 +126,9 @@ router.put('/patient', (req, res, next) => {
  */
 router.get('/patients', (req, res, next) => {
 
-	const results = [];
+	const results = patients
+
+	res.json(results)
 
 	// pg.connect(connectionString, (err, client, done) => {
 

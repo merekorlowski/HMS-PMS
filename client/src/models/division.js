@@ -6,7 +6,7 @@ export class Division {
             Object.assign(this, data)
         } else {
             this.divisionID = ''
-            this.name = ''
+            this.divisionName = ''
             this.chargeNurseID = ''
             this.location = ''
             this.numOfBeds = -1

@@ -8,10 +8,18 @@ export class PatientService {
         this.http = new HttpClient().configure(config => {
             config.withBaseUrl(config.baseUrl);
         })
-    }
+		}
+		
+		getPatient(patientID) {
+			return this.http.fetch(`/patient?patientID=${patientID}`).then(response => response.json()).then(data => {
+				return data.map(patient => new Patient(patient))
+			})
+		}
 
     getPatients() {
-        return this.http.fetch('/patients').then(response => response.json())
+				return this.http.fetch('/patients').then(response => response.json()).then(data => {
+					return data.map(patient => new Patient(patient))
+				})
     }
 
     register(patient) {

@@ -1,12 +1,12 @@
 import {inject} from 'aurelia-framework'
-import {Session} from '../../services/session'
+import {StaffService} from '../../services/staff'
 import {DivisionService} from '../../services/division'
 
-@inject(Session, DivisionService)
+@inject(StaffService, DivisionService)
 export class DivisionFile {
-    constructor(session, DivisionService) {
-        this.session = session
-        this.divisionService = DivisionService
+    constructor(staffService, divisionService) {
+        this.staffService = staffService
+        this.divisionService = divisionService
         this.division = this.divisionService.tempDivision
     }
 
@@ -21,7 +21,5 @@ export class DivisionFile {
     hideDivisionInfoForm() {
         this.isDivisionInfo = false
     }
-
-
 
 }
