@@ -12,7 +12,7 @@ export class PatientService {
 		
 		getPatient(patientID) {
 			return this.http.fetch(`/patient?patientID=${patientID}`).then(response => response.json()).then(data => {
-				return data.map(patient => new Patient(patient))
+				return new Patient(data)
 			})
 		}
 

@@ -2,17 +2,80 @@
     <require from="./styles.css"></require>
     <h2>Divisions</h2>
     <hr/>
-    <form submit="search()">
+    <form id="searchForDivisionInfo" submit="search()">
         <div class="search-bar">
-            <input value.bind="patientID" placeholder="Division ID" />
+            <input value.bind="divisionID" placeholder="Division ID" />
             <button type="submit"><i class="material-icons">search</i></button>
         </div>
     </form>
+    <div id="noDivisionsMsg" if.bind="divisions.length === 0">
+        There are no divisions currently.
+    </div>
     <ul class="list">
         <li repeat.for="division of divisions">
             <div><strong>${division.divisionID}</strong></div>
             <div class="divison-name">${division.name}</div>
-            <a class="view-btn btn" href="/#/PMS/division/${division.divisionID}"><i class="material-icons">forward</i></a>
+            <a class="view-btn" href="/#/PMS/division/${division.divisionID}"><i class="material-icons">forward</i></a>
         </li>
     </ul>
+    <button id="displayCreationFormBtn" class="btn" click.trigger="displayCreationForm()">Create Division</button>
+    <div if.bind="isDisplayingCreationForm" class="popup-form">
+        <div class="shadow-layer"></div>
+        <form id="divisionCreationForm">
+            <button class="cancel-button" click.trigger="hideCreationForm()">
+                <i class="material-icons">clear</i>
+            </button>
+            <div id="divisionInfo">
+                <h2>Division Information</h2>
+                <hr/>
+                <div class="form-row">
+                <label><span class="required-field">* </span>Division Type:
+                    <select value.bind="newDivision.divisionType">
+                    <option value="Ward">Ward</option>
+                    <option value="Out Patient Clinic">Out Patient Clinic</option>
+                    </select>
+                </label>
+                </div>
+                <div class="form-row">
+                <label><span class="required-field">* </span>Division ID:
+                    <input type="text" value.bind="newDivision.divisionID" placeholder="Division Type 1"
+                    focusout.trigger="newDivision.hasChanged('divisionID')"
+                    class.bind="newDivision.changed['divisionID'] ? (newDivision.isDivisionIDValid ? 'valid' : 'invalid'): ''"
+                    />
+                </label>
+                <label><span class="required-field">* </span>Division Name:
+                    <input type="text" value.bind="newDivision.divisionName" placeholder="Division Name"
+                    focusout.trigger="newDivision.hasChanged('divisionName')"
+                    class.bind="newDivision.changed['divisionName'] ? (newDivision.isDivisionNameValid ? 'valid' : 'invalid'): ''"
+                    />
+                </label>
+                </div>
+                <div class="form-row">
+                <label><span class="required-field">* </span>Location:
+                    <input type="text" value.bind="newDivision.location" placeholder="Division Location"
+                    focusout.trigger="newDivision.hasChanged('location')"
+                    class.bind="newDivision.changed['location'] ? (newDivision.isDivisionLocationValid ? 'valid' : 'invalid'): ''"
+                    />
+                </label>
+                <label><span class="required-field">* </span>Phone Extension:
+                    <input type="number" class="input-long" placeholder="0000" value.bind="newDivision.phoneExtension"
+                        focusout.trigger="newDivision.hasChanged('phoneExtension')"
+                        class.bind="newDivision.changed['phoneExtension'] ? (newDivision.isphoneExtensionValid ? 'valid' : 'invalid'): ''"
+                    />
+                </label>
+                </div>
+                <div class="form-row">
+                <label><span class="required-field">* </span>Total Number of Beds:
+                    <input type="number" class="input-short" value.bind="newDivision.numOfBeds" min=0
+                    focusout.trigger="newDivision.hasChanged('numOfBeds')"
+                    class.bind="newDivision.changed['numOfBeds'] ? (newDivision.isnumOfBedsValid ? 'valid' : 'invalid'): ''"
+                    />
+                </label>
+                </div>
+            </div>
+            <div class="button-section">
+                <button id="createDivisionBtn" class="btn" click.trigger="createDivision()">Create</button>
+            </div>
+        </form>
+    </div>
 </template>
