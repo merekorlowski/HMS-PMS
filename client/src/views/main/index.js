@@ -1,10 +1,10 @@
 import {inject} from 'aurelia-framework'
-import {Session} from '../../services/session'
+import {StaffService} from '../../services/staff'
 
-@inject(Session)
+@inject(StaffService)
 export class Main {
-	constructor(session) {
-    this.session = session
+	constructor(staffService) {
+    this.staffService = staffService
     this.menuIsVisible = false
 	}
   configureRouter(config, router) {

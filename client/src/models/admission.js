@@ -7,6 +7,8 @@ export class Admission {
         this.privateInsuranceNumber = ''
     }
 
-    
+    get isLocalDoctorValid() {
+        return this.local
+    }
 
 }

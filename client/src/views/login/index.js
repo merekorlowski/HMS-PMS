@@ -1,40 +1,36 @@
 import {inject} from 'aurelia-framework'
 import {Router} from 'aurelia-router'
-import {Session} from '../../services/session'
+import {StaffService} from '../../services/staff'
 
-@inject(Session, Router)
+@inject(StaffService, Router)
 export class Login {
-  constructor(session, router) {
-    this.session = session
+  constructor(staffService, router) {
+    this.staffService = staffService
     this.router = router
-    this.userID = this.session.user.userID || ''
-    this.password = this.session.user.password || ''
-    this.invalidUserID = false
+    this.staffID = ''//this.staffService.staff.staffID || ''
+    this.password = ''//this.staffService.staff.password || ''
+    this.invalidStaffID = false
     this.invalidPassword = false
   }
 
   login() {
-    if (this.userID === '') {
-      this.invalidUsername = true
+    if (this.staffID === '') {
+      this.invalidStaffname = true
     }
 
     if (this.password === '') {
       this.invalidPassword = true
     }
 
-    if (!this.invalidUserID && !this.invalidPassword) {
-      //this.session.login(this.userID, this.password).then(() => {
+    if (!this.invalidStaffID && !this.invalidPassword) {
+      this.staffService.login(this.staffID, this.password).then(() => {
         this.router.navigate('PMS')
-      //})
+      })
     }
   }
 
   register() {
     this.router.navigate('register')
-  }
-
-  deactivate() {
-    this.session.newUserRegistered = false
   }
 
 }

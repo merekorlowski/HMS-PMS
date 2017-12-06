@@ -1,38 +1,31 @@
 import {inject} from 'aurelia-framework'
 import {Router} from 'aurelia-router'
-import {StaffMemberService} from '../../services/staff_member'
-import {Session} from '../../services/session'
+import {StaffService} from '../../services/staff'
 import {Toaster} from '../../services/toaster'
-import {User} from '../../models/user'
+import {Staff} from '../../models/staff'
 
-@inject(Router, StaffMemberService, Session, Toaster)
+@inject(Router, StaffService, Toaster)
 export class Register {
-    constructor(router, staffMemberService, session, toaster) {
+    constructor(router, staffService, toaster) {
         this.router = router
-        this.staffMemberService = staffMemberService
-        this.session = session
+        this.staffService = staffService
         this.toaster = toaster
-        this.user = new User()
+        this.staff = new Staff()
     }
 
     register() {
-        if (this.user.isValid()) {
-            //this.patientService.register(this.user).then(success => {
+        if (this.staff.isValid()) {
+            this.staffService.register(this.staff).then(success => {
                 this.toaster.add({
-                    text: `Successfully registered user: ${this.user.userID}.`,
+                    text: `Successfully registered staff: ${this.staff.staffID}.`,
                     type: 'success'
                 })
-                this.session.user = {
-                    userID: this.user.userID,
-                    password: this.user.password,
-                    role: this.user.role //temp
-                }
                 this.router.navigate('login')
-            //}).catch(err => {
+            }).catch(err => {
                 // display er
-            //})
+            })
         } else {
-            //
+            
         }
     }
 

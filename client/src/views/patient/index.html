@@ -1,9 +1,9 @@
 <template>
     <require from="./styles.css"></require>
     <div class="patient-file-button">
-        <button if.bind="isUserDoctor()" class="btn" click.trigger="displayAddPrescriptionForm()">Add Prescription</button>            
-        <button if.bind="isUserDoctor() && !patient.isAdmitted" class="btn" click.trigger="displayAdmitPatientForm()">Admit Patient</button>
-        <button if.bind="isUserDoctor() && patient.isAdmitted" class="btn" click.trigger="dischargePatient()">Discharge Patient</button>
+        <button if.bind="isStaffDoctor()" class="btn" click.trigger="displayAddPrescriptionForm()">Add Prescription</button>            
+        <button if.bind="isStaffDoctor() && !patient.isAdmitted" class="btn" click.trigger="displayAdmitPatientForm()">Admit Patient</button>
+        <button if.bind="isStaffDoctor() && patient.isAdmitted" class="btn" click.trigger="dischargePatient()">Discharge Patient</button>
     </div>
     <div id="patientFile">
         <h2>${patient.lastName}, ${patient.firstName}</h2>
@@ -60,7 +60,7 @@
             <div class="form-row">
                 <label><span class="required-field">* </span>Local doctor: 
                     <select value.bind="admission.localDoctor">
-                        <option repeat.for="doctor of doctors" value.bind="doctor.userID">${doctor.lastName}, ${doctor.firstName}</option>
+                        <option repeat.for="doctor of doctors" value.bind="doctor.staffID">${doctor.lastName}, ${doctor.firstName}</option>
                     </select>
                 </label>
             </div>

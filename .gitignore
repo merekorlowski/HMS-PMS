@@ -1,9 +1,6 @@
-<<<<<<< HEAD
-/bin/
-=======
 .vscode
 .idea
 .editorconfig
 .db_credentials
 node_modules/*
->>>>>>> 53928c97c3ce7c202056af1e538a435cfd18196c
+package-lock.json

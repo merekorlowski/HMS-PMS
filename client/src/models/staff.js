@@ -1,13 +1,17 @@
 
-export class User {
-    constructor() {
-        this.userID = ''
-        this.password = ''
-        this.cpassword = ''
-        this.firstName = ''
-        this.lastName = ''
-        this.email = ''
-        this.role = 'Doctor'
+export class Staff {
+    constructor(data) {
+        if (data) {
+            Object.assign(this, data)
+        } else {
+            this.staffID = 0
+            this.password = ''
+            this.cpassword = ''
+            this.firstName = ''
+            this.lastName = ''
+            this.email = ''
+            this.role = 'Doctor'
+        }
         this.changed = {}
     }
 
@@ -15,9 +19,9 @@ export class User {
         this.changed[attribute] = true
     }
 
-    get isUserIDValid() {
-        let patt = new RegExp('[A-Za-z]([A-Za-z]|[0-9])*')
-        return this.userID != '' && patt.test(this.userID)
+    get isStaffIDValid() {
+        let patt = new RegExp('[0-9]+')
+        return this.staffID != '' && patt.test(this.staffID)
     }
 
     get isPasswordValid() {
@@ -44,7 +48,7 @@ export class User {
 
     isValid() {
         return (
-            this.isUserIDValid &&
+            this.isStaffIDValid &&
             this.isPasswordValid &&
             this.isCPasswordValid &&
             this.isFirstNameValid &&

@@ -4,6 +4,8 @@
 const express = require('express');
 const router = express.Router();
 const pg = require('pg');
+const config = require('../config')
+const connectionString = process.env.DATABASE_URL || config.dbUrl
 
 
 /**
@@ -23,7 +25,7 @@ router.post('/patient', (req, res, next) => {
 		//Add a NextOfKin
 		const query =  `
 			INSERT 
-			INTO HMS-PMS.Patient
+			INTO HMS_PMS.Patient
 			VALUES (
 			'${req.body.patientID}',
 			'${req.body.address}',
@@ -62,7 +64,7 @@ router.put('/patient', (req, res, next) => {
 		}
 
 		const query = client.query(`
-			UPDATE HMS-PMS.Patient
+			UPDATE HMS_PMS.Patient
 			SET  
 			publicAssurance = '${req.body.publicAssurance}' ,
 			address	= '${req.body.address}',
@@ -106,7 +108,7 @@ router.get('/patients', (req, res, next) => {
 
 		const query = client.query(`
 			SELECT * 
-			FROM HMS-PMS.Patient; 
+			FROM HMS_PMS.Patient; 
 			`);
 
 		query.on('row', row => {
@@ -138,7 +140,7 @@ router.post('/patient/request-admission', (req, res, next) => {
 		}
 
 		const query = client.query(`
-			INSERT INTO HMS-PMS.DivisionRequest
+			INSERT INTO HMS_PMS.DivisionRequest
 			(priorityAssessment,
 			rational,
 			patientID,
@@ -184,8 +186,8 @@ router.get('/patient/room-admission', (req, res, next) => {
 
 		const query = client.query(`
 			SELECT patientID 
-			FROM HMS-PMS.Patient
-			NATURAL JOIN HMS-PMS.RoomAdmission; 
+			FROM HMS_PMS.Patient
+			NATURAL JOIN HMS_PMS.RoomAdmission; 
 			`);
 
 		query.on('row', row => {
@@ -216,7 +218,7 @@ router.post('/patient/admit', (req, res, next) => {
 		}
 
 		const query = client.query(`
-			INSERT INTO HMS-PMS.RoomAdmission
+			INSERT INTO HMS_PMS.RoomAdmission
 			(privateInsurance,
 			patientID,
 			chargeNurseID,
@@ -259,7 +261,7 @@ router.post('/patient/accept-admission', (req, res, next) => {
 	//select form divRequest - insert in roomadmission - delete from divRequest
 		const query = client.query(`
 			SELECT *
-			FROM HMS-PMS.DivisionRequest
+			FROM HMS_PMS.DivisionRequest
 			WHERE divisionRequestID = '${req.body.privateInsurance}';
 			`);
 
@@ -288,7 +290,7 @@ router.delete('/patient/discharge', (req, res, next) => {
 		}
 
 		const query = client.query(`
-			DELETE FROM HMS-PMS.RoomAdmission 
+			DELETE FROM HMS_PMS.RoomAdmission 
 			WHERE patientID = '${req.body.patientID}'
 			`);
 

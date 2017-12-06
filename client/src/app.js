@@ -1,20 +1,20 @@
 import {Redirect} from 'aurelia-router'
 import {inject} from 'aurelia-framework'
-import {Session} from './services/session'
+import {StaffService} from './services/staff'
 import {Toaster} from './services/toaster'
 
-@inject(Session, Toaster)
+@inject(StaffService, Toaster)
 export class App {
-  constructor(session, toaster) {
-    this.session = session
+  constructor(staffService, toaster) {
+    this.staffService = staffService
     this.toaster = toaster
   }
 
   configureRouter(config, router) {
-    config.title = 'HMS-PMS'
+    config.title = 'HMS_PMS'
 
     const handleUnknownRoutes = (instruction) => {
-      if (this.session.key) {
+      if (this.staffService.key) {
         return { route: 'PMS', name: 'main', moduleId: 'views/main/index' }
       } else {
         return { route: 'login', moduleId: 'views/login/index', title: 'Login' }
@@ -43,7 +43,7 @@ export class App {
 
 class VerifySessionKey {
   run(navigationInstruction, next) {
-    if (this.session.key) {
+    if (this.staffService.key) {
       return next();
     } else {
       return next.cancel(new Redirect('login'))
