@@ -7,12 +7,18 @@ export class Division {
         } else {
             this.divisionID = ''
             this.divisionName = ''
+            this.divisionType = ''
             this.chargeNurseID = ''
             this.location = ''
             this.numOfBeds = -1
-            this.numOfOcuppentBeds = -1
-            this.telephoneExtension = ''
+            this.numOfOccupiedBeds = 0
+            this.phoneExtension = ''
         }
+        this.changed = {}
+    }
+
+    hasChanged(attribute) {
+        this.changed[attribute] = true
     }
 
     get isComplete() {
@@ -23,4 +29,31 @@ export class Division {
         return this.divisionID != ''
     }
 
+    get isDivisionNameValid() {
+        return this.divisionName != ''
+    }
+
+    get isDivisionLocationValid() {
+        return this.location != ''
+    }
+
+    get isnumOfBedsValid() {
+        return (this.numOfBeds != '' && this.numOfBeds >= 0)
+    }
+
+    get isphoneExtensionValid() {
+        let patt = new RegExp('[1-9][0-9]{3}');
+        return patt.test(this.phoneExtension)
+    }
+
+    isValid() {
+        return (
+            this.isDivisionIDValid &&
+            this.isDivisionNameValid &&
+            this.isDivisionLocationValid &&
+            this.isnumOfBedsValid &&
+            this.isnumOfBedsValid &&
+            this.isphoneExtensionValid
+        )
+    }
 }

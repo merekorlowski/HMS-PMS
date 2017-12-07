@@ -1,25 +1,46 @@
 import {inject} from 'aurelia-framework'
+import {Router} from 'aurelia-router'
+
 import {StaffService} from '../../services/staff'
 import {DivisionService} from '../../services/division'
+import {Division} from '../../models/division'
 
-@inject(StaffService, DivisionService)
-export class DivisionFile {
-    constructor(staffService, divisionService) {
-        this.staffService = staffService
+@inject(Router, DivisionService)
+export class Divisions {
+    constructor(router, divisionService){
+        this.router = router
         this.divisionService = divisionService
-        this.division = this.divisionService.tempDivision
+        this.divisionID = ''
+        this.divisions = []
+        this.division = null
+        this.newDivision = new Division()
+        this.getDivisions()
+        this.isDisplayingCreationForm = false
     }
 
-    getDivision() {
-
+    getDivisions() {
+        this.divisionService.getDivisions().then(divisions => {
+            this.divisions = divisions
+        })
     }
 
-    displayDivisionInfoForm() {
-        this.isDivisionInfo = true
+    displayCreationForm() {
+        this.isDisplayingCreationForm = true
     }
 
-    hideDivisionInfoForm() {
-        this.isDivisionInfo = false
+    hideCreationForm() {
+        this.isDisplayingCreationForm = false
+    }
+
+    createDivision() {
+        if (this.newDivision.isValid()) {
+            this.divisionService.createDivision(this.newDivision).then(() => {
+                this.isDisplayingCreationForm = false
+                this.divisions.push(this.newDivision)
+            }).catch(err => {
+
+            })
+        }
     }
 
 }
