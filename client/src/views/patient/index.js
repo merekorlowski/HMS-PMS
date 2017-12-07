@@ -14,7 +14,7 @@ export class PatientFile {
         this.isUpdatingPatient = false
         this.isAddingPrescription = false
         this.step = 1
-        this.newPrescription = new Prescription()
+				this.newPrescription = new Prescription()
 		}
 
 		activate(params, nav) {
@@ -22,12 +22,15 @@ export class PatientFile {
 		}
 
 		getPatient(id) {
-				this.patientService.getPatient(id).then(patient => this.patient = patient)
+				this.patientService.getPatient(id).then(patient => {
+					this.patient = patient
+					this.getPrescriptions()
+				})
 		}
 
     getPrescriptions() {
-        this.patientService.getPrescriptions(this.patient.patientID).then(prescriptions => {
-            this.prescriptions = prescriptions
+        this.patientService.getPrescriptions(this.patient._id).then(prescriptions => {
+						this.prescriptions = prescriptions
         }).catch(err => {
 
      		})
@@ -50,12 +53,16 @@ export class PatientFile {
     }
 
     save() {
-        this.isUpdatingPatient = false
-        this.step = 1
+				if (this.patient.isValid()) {
+						this.patientService.update(this.patient).then(patient => {
+								this.isUpdatingPatient = false
+								this.step = 1
+						})
+				}
     }
 
     isStaffDoctor() {
-        return this.staffService.staff.role === 'Doctor'
+        return true//this.staffService.staff.role === 'Doctor'
     }
 
     displayAdmitPatientForm() {
@@ -67,7 +74,7 @@ export class PatientFile {
     }
 
     admitPatient() {
-        this.patientService.admitPatient(this.patient.id).then(() => {
+        this.patientService.admitPatient(this.patient._id).then(() => {
             this.isAdmittingPatient = false
             this.patient.isAdmitted = true
         }).catch(err => {
@@ -84,13 +91,15 @@ export class PatientFile {
     }
 
     addPrescription() {
-        this.patientService.addPrescription(this.patient.id, this.newPrescription).then(() => {
-            this.isAddingPrescription = false
-            this.patient.prescriptions.push(this.newPrescription)
-            this.newPrescription = new Prescription()
-        }).catch(err => {
+				if (this.newPrescription.isValid()) {
+					this.patientService.addPrescription(this.patient._id, this.newPrescription).then(prescription => {
+							this.isAddingPrescription = false
+							this.patient.prescriptions.push(this.newPrescription)
+							this.newPrescription = new Prescription()
+					}).catch(err => {
 
-        })
+					})
+				}
     }
 
 }

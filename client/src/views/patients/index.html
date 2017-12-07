@@ -2,9 +2,9 @@
     <require from="./styles.css"></require>
     <h2>Patients</h2>
     <hr/>
-    <form id="searchForPatientForm" submit="search()">
+    <form id="searchForPatientForm" submit.trigger="search()">
         <div class="search-bar">
-            <input value.bind="patientID" placeholder="Patient ID" />
+            <input value.bind="_id" placeholder="Patient ID" />
             <button type="submit"><i class="material-icons">search</i></button>
         </div>
     </form>
@@ -13,9 +13,9 @@
     </div>
     <ul class="list">
         <li repeat.for="patient of patients">
-            <div><strong>${patient.patientID}</strong></div>
+            <div><strong>${patient._id}</strong></div>
             <div class="patient-name">${patient.lastName}, ${patient.firstName}</div>
-            <a class="view-btn" href="/#/PMS/patient/${patient.patientID}"><i class="material-icons">forward</i></a>
+            <a class="view-btn" href="/#/PMS/patient/${patient._id}"><i class="material-icons">forward</i></a>
         </li>
     </ul>
     <button id="displayRegistrationFormBtn" class="btn" click.trigger="displayRegistrationForm()">Register Patient</button>
@@ -30,9 +30,9 @@
                 <hr/>
                 <div class="form-row">
                 <label><span class="required-field">* </span>Government Insurance Number:
-                    <input type="text" value.bind="newPatient.patientID" placeholder="111-111-111"
-                    focusout.trigger="newPatient.hasChanged('patientID')"
-                    class.bind="newPatient.changed['patientID'] ? (newPatient.isPatientIDValid ? 'valid' : 'invalid'): ''"
+                    <input type="text" value.bind="newPatient._id" placeholder="111-111-111"
+                    focusout.trigger="newPatient.hasChanged('_id')"
+                    class.bind="newPatient.changed['_id'] ? (newPatient.isPatientIDValid ? 'valid' : 'invalid'): ''"
                     />
                 </label>
                 </div>

@@ -9,7 +9,7 @@ export class Patients {
     constructor(router, patientService) {
         this.router = router
         this.patientService = patientService
-        this.patientID = ''
+        this._id = ''
         this.patients = []
         this.patient = null
         this.newPatient = new Patient()
@@ -25,16 +25,7 @@ export class Patients {
     }
 
     search() {
-        found = false
-        for (let patient of this.patients) {
-            if (patient.patientID === this.patientID) {
-                found = true
-                break
-            }
-        }
-        if (found) {
-            this.router.navigate(`patient/${this.patientID}`)
-        }
+        this.router.navigate(`patient/${this._id}`)
     }
 
     displayRegistrationForm() {
