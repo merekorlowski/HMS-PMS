@@ -1,6 +1,6 @@
 
 #patientFile {
-    position: relative;
+		position: relative;
 }
 
 .division-info {
@@ -61,3 +61,24 @@
     right: 20px;
     bottom: 20px;
 }
+
+#prescriptions {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+#prescriptions li {
+	display: inline-block;
+	border: 1px solid #6e6e6e;
+	border-radius: 5px;
+	margin: 10px;
+	padding: 10px;
+}
+
+#patientFileInformation {
+	height: 500px;
+	overflow-y: auto;
+	position: relative;
+}
+

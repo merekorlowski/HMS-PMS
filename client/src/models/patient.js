@@ -1,26 +1,28 @@
 import {Address} from './address'
+import {NextOfKin} from './nextOfKin'
 
 export class Patient {
     constructor(data) {
         if (data) {
+						let address = data.address
+						data.address = new Address(address)
+						let nextOfKin = data.nextOfKin
+						data.nextOfKin = new NextOfKin(nextOfKin)
             Object.assign(this, data)
         } else {
-            this.patientID = ''
+            this._id = ''
             this.firstName = ''
             this.lastName = ''
             this.address = new Address()
             this.phoneNumber = ''
             this.dateOfBirth = ''
-            this.gender = 'M'
-            this.maritalStatus = 'S'
-            this.externalDoctorID = ''
-            this.nofFirstName = ''
-            this.nofLastName = ''
-            this.nofRelationship = ''
-            this.nofAddress = new Address()
-            this.nofPhoneNumber = ''
-            this.isAdmitted = false
-        }
+            this.gender = 'Male'
+            this.maritalStatus = 'Single'
+						this.externalDoctorID = ''
+						this.nextOfKin = new NextOfKin()
+				}
+				
+				this.isAdmitted = false
         this.changed = {}
     }
 
@@ -29,7 +31,7 @@ export class Patient {
     }
 
     get isPatientIDValid() {
-        return this.patientID != ''
+        return this._id != ''
     }
 
     get isFirstNameValid() {
@@ -54,23 +56,6 @@ export class Patient {
         return this.externalDoctorID != ''
     }
 
-    get isNofFirstNameValid() {
-        return this.nofFirstName != ''
-    }
-
-    get isNofLastNameValid() {
-        return this.nofLastName != ''
-    }
-
-    get isNofRelationshipValid() {
-        return this.nofRelationship != ''
-    }
-
-    get isNofPhoneNumberValid() {
-        let patt = new RegExp('[1-9](([0-9]{9})|([0-9]{10}))');
-        return patt.test(this.nofPhoneNumber)
-    }
-
     isValid() {
         return (
             this.isPatientIDValid &&
@@ -79,12 +64,8 @@ export class Patient {
             this.isPhoneNumberValid &&
             this.isDateOfBirthValid &&
             this.isExternalDoctorIDValid &&
-            this.address.isValid() &&
-            this.isNofFirstNameValid &&
-            this.isNofLastNameValid &&
-            this.isNofRelationshipValid &&
-            this.nofAddress.isValid() &&
-            this.isNofPhoneNumberValid
+						this.address.isValid() &&
+						this.nextOfKin.isValid()
         )
     }
 

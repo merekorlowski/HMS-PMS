@@ -7,39 +7,52 @@ const pg = require('pg');
 const config = require('../config')
 const connectionString = process.env.DATABASE_URL || config.dbUrl
 
+const Prescription = require('../schemas/prescription')
+
 /**
 * Get Patient Prescriptions
 */
 router.get('/prescriptions', (req, res) => {
 
-	const results = [];
-
-	pg.connect(connectionString, (err, client, done) => {
-
-		// Handle connection errors
-		if(err) {
-			done();
-			console.log(err);
-			return res.status(500).json({success: false, data: err});
+	Prescription.find({
+		patientID: req.query._id
+	}, (err, prescriptions) => {
+		if (err) {
+			console.error(err)
+			res.json(err)
+		} else {
+			res.json(prescriptions)
 		}
+	})
 
-		const query = client.query(`
-			SELECT *
-			FROM HMS_PMS.Prescription
-			WHERE patientID='${req.body.patientID}';
-			`);
+	// const results = [];
 
-		query.on('row', row => {
-			results.push(row);
-		});
+	// pg.connect(connectionString, (err, client, done) => {
 
-		// After all data is returned, close connection and return results
-		query.on('end', () => {
-			done();
-			return res.json(results);
-		});
+	// 	// Handle connection errors
+	// 	if(err) {
+	// 		done();
+	// 		console.log(err);
+	// 		return res.status(500).json({success: false, data: err});
+	// 	}
 
-	});
+	// 	const query = client.query(`
+	// 		SELECT *
+	// 		FROM HMS_PMS.Prescription
+	// 		WHERE _id='${req.body._id}';
+	// 		`);
+
+	// 	query.on('row', row => {
+	// 		results.push(row);
+	// 	});
+
+	// 	// After all data is returned, close connection and return results
+	// 	query.on('end', () => {
+	// 		done();
+	// 		return res.json(results);
+	// 	});
+
+	// });
 });
 
 /**
@@ -47,84 +60,103 @@ router.get('/prescriptions', (req, res) => {
 */
 router.get('/prescription', (req, res) => {
 
-	const results = [];
+	// const results = [];
 
-	pg.connect(connectionString, (err, client, done) => {
+	// pg.connect(connectionString, (err, client, done) => {
 
-		// Handle connection errors
-		if(err) {
-			done();
-			console.log(err);
-			return res.status(500).json({success: false, data: err});
-		}
+	// 	// Handle connection errors
+	// 	if(err) {
+	// 		done();
+	// 		console.log(err);
+	// 		return res.status(500).json({success: false, data: err});
+	// 	}
 
-		const query = client.query(`
-			SELECT *
-			FROM HMS_PMS.Prescription
-			WHERE prescriptionID='${req.body.prescriptionID}';
-			`);
+	// 	const query = client.query(`
+	// 		SELECT *
+	// 		FROM HMS_PMS.Prescription
+	// 		WHERE prescriptionID='${req.body.prescriptionID}';
+	// 		`);
 
-		query.on('row', row => {
-			results.push(row);
-		});
+	// 	query.on('row', row => {
+	// 		results.push(row);
+	// 	});
 
-		// After all data is returned, close connection and return results
-		query.on('end', () => {
-			done();
-			return res.json(results);
-		});
+	// 	// After all data is returned, close connection and return results
+	// 	query.on('end', () => {
+	// 		done();
+	// 		return res.json(results);
+	// 	});
 
-	});
+	// });
 });
 
 /**
 * Prescibe Medication
 */
 router.post('/prescription', (req, res) => {
-	pg.connect(connectionString, (err, client, done) => {
 
-		// Handle connection errors
-		if(err) {
-			done();
-			console.log(err);
-			return res.status(500).json({success: false, data: err});
+	new Prescription({
+		patientID: req.body._id,
+		drugNumber: req.body.prescription.drugNumber,
+		drugName: req.body.prescription.drugName,
+		unitsByDay: req.body.prescription.unitsByDay,
+		administrationsPerDay: req.body.prescription.administrationsPerDay,
+		methodOfAdministrations: req.body.prescription.methodOfAdministrations,
+		startDate: req.body.prescription.startDate,
+		endDate: req.body.prescription.endDate
+	}).save((err, prescription) => {
+		if (err) {
+			console.error(err)
+			res.json(err)
+		} else {
+			res.json(prescription)
 		}
+	})
+	
+	// pg.connect(connectionString, (err, client, done) => {
 
-		//Add a MedicalSupply
-		let queryText = `
-		INSERT 
-			INTO HMS_PMS.Prescription(
-			unitsByDay,
-			numOfAdministrationPerDay,
-			methodOfAdministration,
-			startDate,
-			finishDate,
-			numOfAdministrationPerTime,
-			localDoctorID, 
-			patientID,
-			drugID
-			)
-			VALUES (
-			'${req.body.unitsByDay}',
-			'${req.body.numOfAdministrationPerDay}',
-			'${req.body.methodOfAdministration}',
-			'${req.body.startDate}',
-			'${req.body.finishDate}',
-			'${req.body.numOfAdministrationPerTime}',
-			'${req.body.localDoctorID}',
-			'${req.body.patientID}',
-			'${req.body.drugID}'
-			);
-			`;
+	// 	// Handle connection errors
+	// 	if(err) {
+	// 		done();
+	// 		console.log(err);
+	// 		return res.status(500).json({success: false, data: err});
+	// 	}
 
-		const query = client.query(queryText);
+	// 	//Add a MedicalSupply
+	// 	let queryText = `
+	// 	INSERT 
+	// 		INTO HMS_PMS.Prescription(
+	// 		unitsByDay,
+	// 		numOfAdministrationPerDay,
+	// 		methodOfAdministration,
+	// 		startDate,
+	// 		finishDate,
+	// 		numOfAdministrationPerTime,
+	// 		localDoctorID, 
+	// 		_id,
+	// 		drugID
+	// 		)
+	// 		VALUES (
+	// 		'${req.body.unitsByDay}',
+	// 		'${req.body.numOfAdministrationPerDay}',
+	// 		'${req.body.methodOfAdministration}',
+	// 		'${req.body.startDate}',
+	// 		'${req.body.finishDate}',
+	// 		'${req.body.numOfAdministrationPerTime}',
+	// 		'${req.body.localDoctorID}',
+	// 		'${req.body._id}',
+	// 		'${req.body.drugID}'
+	// 		);
+	// 		`;
 
-		// After all data is returned, close connection and return results
-		query.on('end', () => {
-			done();
-			return res.json();
-		});
-	});
+	// 	const query = client.query(queryText);
+
+	// 	// After all data is returned, close connection and return results
+	// 	query.on('end', () => {
+	// 		done();
+	// 		return res.json();
+	// 	});
+	// });
 });
 
 /**
@@ -132,38 +164,38 @@ router.post('/prescription', (req, res) => {
 */
 router.put('/prescription', (req, res, next) => {
 
-	pg.connect(connectionString, (err, client, done) => {
+	// pg.connect(connectionString, (err, client, done) => {
 
-		// Handle connection errors
-		if(err) {
-			done();
-			console.log(err);
-			return res.status(500).json({success: false, data: err});
-		}
+	// 	// Handle connection errors
+	// 	if(err) {
+	// 		done();
+	// 		console.log(err);
+	// 		return res.status(500).json({success: false, data: err});
+	// 	}
 
-		const query = client.query(`
-			UPDATE HMS_PMS.Prescription 			
-			SET 
-			unitsByDay= '${req.body.unitsByDay}',
-			numOfAdministrationPerDay='${req.body.numOfAdministrationPerDay}',
-			methodOfAdministration='${req.body.methodOfAdministration}',
-			startDate='${req.body.startDate}',
-			finishDate='${req.body.finishDate}',
-			numOfAdministrationPerTime='${req.body.numOfAdministrationPerTime}',
-			localDoctorID='${req.body.localDoctorID}',
-			drugID = '${req.body.drugID}'
-			WHERE
-			prescriptionID='${req.body.prescriptionID}'
-			;
-			`);
+	// 	const query = client.query(`
+	// 		UPDATE HMS_PMS.Prescription 			
+	// 		SET 
+	// 		unitsByDay= '${req.body.unitsByDay}',
+	// 		numOfAdministrationPerDay='${req.body.numOfAdministrationPerDay}',
+	// 		methodOfAdministration='${req.body.methodOfAdministration}',
+	// 		startDate='${req.body.startDate}',
+	// 		finishDate='${req.body.finishDate}',
+	// 		numOfAdministrationPerTime='${req.body.numOfAdministrationPerTime}',
+	// 		localDoctorID='${req.body.localDoctorID}',
+	// 		drugID = '${req.body.drugID}'
+	// 		WHERE
+	// 		prescriptionID='${req.body.prescriptionID}'
+	// 		;
+	// 		`);
 
-		// After all data is returned, close connection and return results
-		query.on('end', () => {
-			done();
-			return res.json();
-	});
+	// 	// After all data is returned, close connection and return results
+	// 	query.on('end', () => {
+	// 		done();
+	// 		return res.json();
+	// });
 
-	});
+	// });
 });
 
 /**
@@ -171,29 +203,29 @@ router.put('/prescription', (req, res, next) => {
 */
 router.delete('/prescription', (req, res, next) => {
 
-	const results = [];
+	// const results = [];
 
-	pg.connect(connectionString, (err, client, done) => {
+	// pg.connect(connectionString, (err, client, done) => {
 
-		// Handle connection errors
-		if(err) {
-			done();
-			console.log(err);
-			return res.status(500).json({success: false, data: err});
-		}
+	// 	// Handle connection errors
+	// 	if(err) {
+	// 		done();
+	// 		console.log(err);
+	// 		return res.status(500).json({success: false, data: err});
+	// 	}
 
-		const query = client.query(`
-			DELETE FROM HMS_PMS.Prescription 
-			WHERE prescriptionID = '${req.body.prescriptionID}';
-			`);
+	// 	const query = client.query(`
+	// 		DELETE FROM HMS_PMS.Prescription 
+	// 		WHERE prescriptionID = '${req.body.prescriptionID}';
+	// 		`);
 
-		// After all data is returned, close connection and return results
-		query.on('end', () => {
-			done();
-			return res.json(results);
-		});
+	// 	// After all data is returned, close connection and return results
+	// 	query.on('end', () => {
+	// 		done();
+	// 		return res.json(results);
+	// 	});
 
-	});
+	// });
 });
 
 /**

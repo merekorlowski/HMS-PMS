@@ -1,10 +1,16 @@
 
 export class Address {
-    constructor() {
+    constructor(data) {
+			if (data) {
+				Object.assign(this, data)
+			} else {
         this.line1 = ''
         this.city = ''
         this.postalCode = ''
-        this.changed = {}
+			}
+
+			this.changed = {}
+
     }
 
     hasChanged(attribute) {

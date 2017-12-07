@@ -7,19 +7,30 @@ const pg = require('pg');
 const config = require('../config')
 const connectionString = process.env.DATABASE_URL || config.dbUrl
 
-const patients = require('../patients')
+const Patient = require('../schemas/patient')
 
 router.get('/patient', (req, res) => {
 	
-	let id = req.query.patientID
-
-	for (let p of patients) {
-		if (p.patientID === id) {
-			return res.json(p)
+	Patient.findOne({
+		_id: req.query._id
+	}, (err, patient) => {
+		if (err) {
+			console.error(err)
+			res.json(err)
+		} else {
+			res.json(patient)
 		}
-	}
+	})
 
-	return res.json()
+	// let id = req.query._id
+
+	// for (let p of patients) {
+	// 	if (p._id === id) {
+	// 		return res.json(p)
+	// 	}
+	// }
+
+	// return res.json()
 
 })
 
@@ -28,11 +39,45 @@ router.get('/patient', (req, res) => {
 */
 router.post('/patient', (req, res, next) => {
 
-	let patient = req.body
+	new Patient({
+		_id: req.body._id,
+		firstName: req.body.firstName,
+		lastName: req.body.lastName,
+		address: {
+			line: req.body.address.line1,
+			city: req.body.address.city,
+			postalCode: req.body.address.postalCode
+		},
+		phoneNumber: req.body.phoneNumber,
+		dateOfBirth: req.body.dateOfBirth,
+		gender: req.body.gender,
+		maritalStatus: req.body.maritalStatus,
+		nextOfKin: {
+			firstName: req.body.nextOfKin.firstName,
+			lastName: req.body.nextOfKin.lastName,
+			relationshipToPatient: req.body.nextOfKin.relationshipToPatient,
+			address: {
+				line: req.body.nextOfKin.address.line1,
+				city: req.body.nextOfKin.address.city,
+				postalCode: req.body.nextOfKin.address.postalCode
+			},
+			phoneNumber: req.body.nextOfKin.phoneNumber	
+		},
+		externalDoctorID: req.body.externalDoctorID
+	}).save((err, patient) => {
+		if (err) {
+			console.log(err)
+			res.json(err)
+		} else {
+			res.json(patient)
+		}
+ 	})
 
-	patients.push(patient)
+	// let patient = req.body
 
-	return res.json()
+	// patients.push(patient)
+
+	// return res.json()
 
 	// pg.connect(connectionString, (err, client, done) => {
 
@@ -48,7 +93,7 @@ router.post('/patient', (req, res, next) => {
 	// 		INSERT 
 	// 		INTO HMS_PMS.Patient
 	// 		VALUES (
-	// 		'${req.body.patientID}',
+	// 		'${req.body._id}',
 	// 		'${req.body.address}',
 	// 		'${req.body.phoneNumber}',
 	// 		'${req.body.dateOfBirth}',
@@ -75,15 +120,52 @@ router.post('/patient', (req, res, next) => {
  */
 router.put('/patient', (req, res, next) => {
 
-	let patient = req.body
-
-	for (let p of patients) {
-		if (p.patientID === patient.patientID) {
-			p = patient
+	Patient.update({
+		_id: req.body._id
+	}, {
+		$set: {
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
+			address: {
+				line: req.body.address.line,
+				city: req.body.address.city,
+				postalCode: req.body.address.postalCode
+			},
+			phoneNumber: req.body.phoneNumber,
+			dateOfBirth: req.body.dateOfBirth,
+			gender: req.body.gender,
+			maritalStatus: req.body.maritalStatus,
+			nextOfKin: {
+				firstName: req.body.nextOfKin.firstName,
+				lastName: req.body.nextOfKin.lastName,
+				relationshipToPatient: req.body.nextOfKin.relationshipToPatient,
+				address: {
+					line: req.body.nextOfKin.address.line,
+					city: req.body.nextOfKin.address.city,
+					postalCode: req.body.nextOfKin.address.postalCode
+				},
+				phoneNumber: req.body.nextOfKin.phoneNumber	
+			},
+			externalDoctorID: req.body.externalDoctorID
 		}
-	}
+	}, (err, patient) => {
+		if (err) {
+			console.log(err)
+			res.json(err)
+		} else {
+			res.json(patient)
+		}
+ 	})
 
-	return res.json()
+	// let patient = req.body
+
+	// for (let p of patients) {
+	// 	if (p._id === patient._id) {
+	// 		p = patient
+	// 	}
+	// }
+
+	// return res.json()
 
  	// pg.connect(connectionString, (err, client, done) => {
 
@@ -109,7 +191,7 @@ router.put('/patient', (req, res, next) => {
 	// 		nofAddress='${req.body.nofAddress}',
 	// 		nofPhoneNumber='${req.body.nofPhoneNumber}'
 
-	// 		WHERE patientID = '${req.body.patientID}';
+	// 		WHERE _id = '${req.body._id}';
 
 	// 		`);
 
@@ -126,9 +208,18 @@ router.put('/patient', (req, res, next) => {
  */
 router.get('/patients', (req, res, next) => {
 
-	const results = patients
+	Patient.find((err, patients) => {
+		if (err) {
+			console.error(err)
+			res.json(err)
+		} else {
+			res.json(patients)
+		}
+	})
 
-	res.json(results)
+	// const results = patients
+
+	// res.json(results)
 
 	// pg.connect(connectionString, (err, client, done) => {
 
@@ -176,7 +267,7 @@ router.post('/patient/request-admission', (req, res, next) => {
 	// 		INSERT INTO HMS_PMS.DivisionRequest
 	// 		(priorityAssessment,
 	// 		rational,
-	// 		patientID,
+	// 		_id,
 	// 		chargeNurseID,
 	// 		localDoctorID,
 	// 		divisionID
@@ -184,7 +275,7 @@ router.post('/patient/request-admission', (req, res, next) => {
 	// 		VALUES(
 	// 		'${req.body.priorityAssessment}'
 	// 		'${req.body.rational}'
-	// 		'${req.body.patientID}'
+	// 		'${req.body._id}'
 	// 		'${req.body.chargeNurseID}'
 	// 		'${req.body.localDoctorID}'
 	// 		'${req.body.divisionID}'
@@ -218,7 +309,7 @@ router.get('/patient/room-admission', (req, res, next) => {
 	// 	}
 
 	// 	const query = client.query(`
-	// 		SELECT patientID 
+	// 		SELECT _id 
 	// 		FROM HMS_PMS.Patient
 	// 		NATURAL JOIN HMS_PMS.RoomAdmission; 
 	// 		`);
@@ -253,14 +344,14 @@ router.post('/patient/admit', (req, res, next) => {
 	// 	const query = client.query(`
 	// 		INSERT INTO HMS_PMS.RoomAdmission
 	// 		(privateInsurance,
-	// 		patientID,
+	// 		_id,
 	// 		chargeNurseID,
 	// 		localDoctorID,
 	// 		divisionID
 	// 		)
 	// 		VALUES(
 	// 		'${req.body.privateInsurance}'
-	// 		'${req.body.patientID}'
+	// 		'${req.body._id}'
 	// 		'${req.body.chargeNurseID}'
 	// 		'${req.body.localDoctorID}'
 	// 		'${req.body.divisionID}'
@@ -324,7 +415,7 @@ router.delete('/patient/discharge', (req, res, next) => {
 
 	// 	const query = client.query(`
 	// 		DELETE FROM HMS_PMS.RoomAdmission 
-	// 		WHERE patientID = '${req.body.patientID}'
+	// 		WHERE _id = '${req.body._id}'
 	// 		`);
 
 	// 	// After all data is returned, close connection and return results

@@ -1,25 +1,43 @@
 const express = require('express')
 const router = express.Router()
+const Staff = require('../schemas/staff')
 const pg = require('pg')
 const config = require('../config')
 const connectionString = process.env.DATABASE_URL || config.dbUrl
-const staff = require('../staff')
+//const staff = require('../staff')
  
 router.post('/login', (req, res) => {
-	let id = parseInt(req.body.staffID) - 1
-	if (staff[id]) {
-		if (req.body.password === staff[id].password) {
-			return res.json({
-				firstName: staff[id].firstName,
-				lastName: staff[id].lastName,
-				role: staff[id].role
+
+	Staff.findOne({
+		_id: req.body.staffID,
+		password: req.body.password
+	}, (err, staff) => {
+		if (err) {
+			console.error(err)
+			res.json(err)
+		} else {
+			res.json({
+				firstName: staff.firstName,
+				lastName: staff.lastName,
+				role: staff.role
 			})
 		}
-	}
+	})
 
-	return res.json({
-		err: 'Invalid staff ID or password.'
-	})//res.status(401).json({success: false, data: 'User does not exist.'});
+	// let id = parseInt(req.body.staffID) - 1
+	// if (staff[id]) {
+	// 	if (req.body.password === staff[id].password) {
+	// 		return res.json({
+	// 			firstName: staff[id].firstName,
+	// 			lastName: staff[id].lastName,
+	// 			role: staff[id].role
+	// 		})
+	// 	}
+	// }
+
+	// return res.json({
+	// 	err: 'Invalid staff ID or password.'
+	// })//res.status(401).json({success: false, data: 'User does not exist.'});
 	// pg.connect(connectionString, (err, client, done) => {
 	
 	// 	// Handle connection errors
@@ -45,17 +63,37 @@ router.post('/login', (req, res) => {
 	// })
 })
 
-router.post('/register', (req, res, next) => {
+router.post('/register', (req, res) => {
 
-	let id = staff.length + 1
-
-	req.body.staffID = id
-
-	staff.push(req.body)
-
-	res.json({
-		staffID: id
+	new Staff({
+		_id: req.body.email,
+		password: req.body.password,
+		firstName: req.body.firstName,
+		lastName: req.body.lastName,
+		email: req.body.email,
+		role: req.body.role,
+		phoneExtension: req.body.phoneExtension,
+		bipperExtension: req.body.bipperExtension
+	}).save((err, staff) => {
+		if (err) {
+			console.error(err)
+			res.json({
+				err: err
+			})
+		} else {
+			return res.json(staff)
+		}
 	})
+
+	// let id = staff.length + 1
+
+	// req.body.staffID = id
+
+	// staff.push(req.body)
+
+	// res.json({
+	// 	staffID: id
+	// })
 
 	// pg.connect(connectionString, (err, client, done) => {
 		
