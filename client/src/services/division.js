@@ -13,8 +13,8 @@ export class DivisionService {
         })
     }
 
-    getDivision(divisionID){
-        return this.http.fetch(`/division?divisionID=${divisionID}`).then(response => response.json()).then(data => {
+    getDivision(_id){
+        return this.http.fetch(`/division?_id=${_id}`).then(response => response.json()).then(data => {
             return new Division(data)
         })
     }
@@ -26,8 +26,8 @@ export class DivisionService {
         })
     }
 
-    consult(divisionID) {
-        return this.http.fetch(`/division?divisionID=${divisionID}`).then(response => response.json())
+    consult(_id) {
+        return this.http.fetch(`/division?_id=${_id}`).then(response => response.json())
     }
 
     createDivision(division) {

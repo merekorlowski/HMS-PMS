@@ -13,16 +13,10 @@ const prescriptions = require('./routes/prescriptions')
 const login = require('./routes/login')
 const patient = require('./routes/patient')
 const division = require('./routes/division')
-const medicalSupply = require('./routes/medicalSupply')
 
 const app = express()
 
 // set up database
-// const pg = require('pg');
-// const connectionString = /*process.env.DATABASE_URL ||*/ config.dbUrl;
-// const client = new pg.Client(connectionString);
-// client.connect();
-
 const mongoose = require('mongoose')
 
 mongoose.connect(config.dbUrl)
@@ -51,7 +45,6 @@ app.use(prescriptions)
 app.use(login)
 app.use(patient)
 app.use(division)
-app.use(medicalSupply)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

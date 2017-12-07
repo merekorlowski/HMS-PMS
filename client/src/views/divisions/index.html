@@ -13,9 +13,9 @@
     </div>
     <ul class="list">
         <li repeat.for="division of divisions">
-            <div><strong>${division.divisionID}</strong></div>
+            <div><strong>${division._id}</strong></div>
             <div class="divison-name">${division.name}</div>
-            <a class="view-btn" href="/#/PMS/division/${division.divisionID}"><i class="material-icons">forward</i></a>
+            <a class="view-btn" href="/#/PMS/division/${division._id}"><i class="material-icons">forward</i></a>
         </li>
     </ul>
     <button id="displayCreationFormBtn" class="btn" click.trigger="displayCreationForm()">Create Division</button>
@@ -38,9 +38,9 @@
                 </div>
                 <div class="form-row">
                 <label><span class="required-field">* </span>Division ID:
-                    <input type="text" value.bind="newDivision.divisionID" placeholder="Division Type 1"
-                    focusout.trigger="newDivision.hasChanged('divisionID')"
-                    class.bind="newDivision.changed['divisionID'] ? (newDivision.isDivisionIDValid ? 'valid' : 'invalid'): ''"
+                    <input type="text" value.bind="newDivision._id" placeholder="1"
+                    focusout.trigger="newDivision.hasChanged('_id')"
+                    class.bind="newDivision.changed['_id'] ? (newDivision.isDivisionIDValid ? 'valid' : 'invalid'): ''"
                     />
                 </label>
                 <label><span class="required-field">* </span>Division Name:
@@ -66,7 +66,7 @@
                 </div>
                 <div class="form-row">
                 <label><span class="required-field">* </span>Total Number of Beds:
-                    <input type="number" class="input-short" value.bind="newDivision.numOfBeds" min=0
+                    <input type="number" class="input-short" value.bind="newDivision.numOfBeds" min="1"
                     focusout.trigger="newDivision.hasChanged('numOfBeds')"
                     class.bind="newDivision.changed['numOfBeds'] ? (newDivision.isnumOfBedsValid ? 'valid' : 'invalid'): ''"
                     />

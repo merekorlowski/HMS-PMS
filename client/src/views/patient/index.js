@@ -62,7 +62,7 @@ export class PatientFile {
     }
 
     isStaffDoctor() {
-        return true//this.staffService.staff.role === 'Doctor'
+        return this.staffService.staff ? this.staffService.staff.role === 'Doctor' : false;
     }
 
     displayAdmitPatientForm() {

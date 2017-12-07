@@ -16,6 +16,6 @@ export class DivisionFile {
 	}
 
 	getDivision(id) {
-				this.divisionService.getDivision(id).then(division => this.division = division)
+			this.divisionService.getDivision(id).then(division => this.division = division)
 	}
 }

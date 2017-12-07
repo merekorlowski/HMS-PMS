@@ -5,15 +5,16 @@ export class Division {
         if (data) {
             Object.assign(this, data)
         } else {
-            this.divisionID = ''
+            this._id = ''
             this.divisionName = ''
-            this.divisionType = ''
+            this.divisionType = 'Ward'
             this.chargeNurseID = ''
             this.location = ''
-            this.numOfBeds = -1
+            this.numOfBeds = 1
             this.numOfOccupiedBeds = 0
             this.phoneExtension = ''
-        }
+				}
+				this.divisionType = ''
         this.changed = {}
     }
 
@@ -26,7 +27,7 @@ export class Division {
     }
 
     get isDivisionIDValid() {
-        return this.divisionID != ''
+        return this._id != ''
     }
 
     get isDivisionNameValid() {
@@ -44,7 +45,11 @@ export class Division {
     get isphoneExtensionValid() {
         let patt = new RegExp('[1-9][0-9]{3}');
         return patt.test(this.phoneExtension)
-    }
+		}
+		
+		get status() {
+				return (this.numOfBeds > this.numOfOccupiedBeds) ? 'Incomplete' : 'Complete';
+		}
 
     isValid() {
         return (

@@ -3,229 +3,60 @@
  */
 const express = require('express');
 const router = express.Router();
-const pg = require('pg');
 const config = require('../config')
 const connectionString = process.env.DATABASE_URL || config.dbUrl
 
-/**
-* PATRICK - Foreign keys dans creation de Division
-*/
+const Division = require('../schemas/division')
+
 /**
 * Create a Division
 */
-router.post('/division', (req, res, next) => {
+router.post('/division', (req, res) => {
 	
-
-	// pg.connect(connectionString, (err, client, done) => {
-
-	// 	// Handle connection errors
-	// 	if(err) {
-	// 		done();
-	// 		console.log(err);
-	// 		return res.status(500).json({success: false, data: err});
-	// 	}
-
-	// 	//Add a Division
-	// 	let queryText = `
-	// 	INSERT 
-	// 	INTO HMS_PMS.Division
-	// 	VALUES (
-	// 	'${req.body.divisionID}',
-	// 	'${req.body.divisionName}',
-	// 	'${req.body.location}',
-	// 	'${req.body.numOfBeds}',
-	// 	'${req.body.phoneExtension}',
-	// 	'${req.body.status}'
-	// 	);
-	// 	`;
-
-	// 	// Add a Ward
-	// 	if (req.body.role === 'Ward') {
-	// 		queryText += `
-	// 		INSERT 
-	// 		INTO HMS_PMS.Ward
-	// 		VALUES (
-	// 		'${req.body.divisionID}',
-	// 		'${req.body.typeOfCare}'
-	// 		);
-	// 		`;
-	// 	}
-
-	// 	// Add an OutPatientClinic
-	// 	else if (req.body.role === 'OutPatientClinic') {
-	// 		queryText += `
-	// 		INSERT 
-	// 		INTO HMS_PMS.OutPatientClinic
-	// 		VALUES (
-	// 		'${req.body.divisionID}'
-	// 		);
-	// 		`;
-	// 	}
-
-	// 	const query = client.query(queryText);
-
-	// 	// After all data is returned, close connection and return results
-	// 	query.on('end', () => {
-	// 		done();
-	// 		return res.json();
-	// 	});
-	// });
-});
-
-//PATRICK
-/**
- * Consult the file of any patient
- */
-router.get('/ward', (req, res, next) => {
-
-	const results = [];
-
-	pg.connect(connectionString, (err, client, done) => {
-
-		// Handle connection errors
-		if(err) {
-			done();
-			console.log(err);
-			return res.status(500).json({success: false, data: err});
+	new Division({
+		_id: req.body._id,
+		divisionName: req.body.divisionName,
+		chargeNurseID: null,
+		location: req.body.location,
+		numOfBeds: req.body.numOfBeds,
+		numOfOccupiedBeds: req.body.numOfOccupiedBeds,
+		phoneExtension: req.body.phoneExtension
+	}).save((err, division) => {
+		if (err) {
+			console.error(err)
+			res.json(err)
+		} else {
+			res.json(division)
 		}
-
-		const query = client.query(`
-			QUERY F3 3) Get information of Ward
-			`);
-
-		query.on('row', row => {
-			results.push(row);
-		});
-
-		// After all data is returned, close connection and return results
-		query.on('end', () => {
-			done();
-			return res.json(results);
-		});
-
-	});
+	})
 });
 
-//PATRICK
-/**
- * Get Information about Division
- */
-router.get('/outPatientClinic', (req, res, next) => {
+router.get('/divisions', (req, res) => {
 
-	const results = [];
-
-	pg.connect(connectionString, (err, client, done) => {
-
-		// Handle connection errors
-		if(err) {
-			done();
-			console.log(err);
-			return res.status(500).json({success: false, data: err});
+	Division.find((err, divisions) => {
+		if (err) {
+			console.error(err)
+			res.json(err)
+		} else {
+			res.json(divisions)
 		}
+	})
 
-		const query = client.query(`
-			QUERY F3 4) Get information of OutPatientClinic
-			`);
+})
 
-		query.on('row', row => {
-			results.push(row);
-		});
+router.get('/division', (req, res) => {
+	
+		Division.findOne({
+			_id: req.query._id
+		}, (err, division) => {
+			if (err) {
+				console.error(err)
+				res.json(err)
+			} else {
+				res.json(division)
+			}
+		})
+	
+	})
 
-		// After all data is returned, close connection and return results
-		query.on('end', () => {
-			done();
-			return res.json(results);
-		});
-
-	});
-});
-
-//PATRICK
-/**
- * Update Division status
- */
-router.put('/patient/division/status', (req, res, next) => {
-
-	pg.connect(connectionString, (err, client, done) => {
-
-		// Handle connection errors
-		if(err) {
-			done();
-			console.log(err);
-			return res.status(500).json({success: false, data: err});
-		}
-
-		const query = client.query(`
-			QUERY F3.2 F3.3 Update Division.status
-			`);
-
-		// After all data is returned, close connection and return results
-		query.on('end', () => {
-			done();
-			return res.json();
-		});
-	});
-});
-
-//PATRICK
-/**
- * Admit Patient to Division
- */
-router.post('/patient/division/admit', (req, res, next) => {
-
-	const results = [];
-
-	pg.connect(connectionString, (err, client, done) => {
-
-		// Handle connection errors
-		if(err) {
-			done();
-			console.log(err);
-			return res.status(500).json({success: false, data: err});
-		}
-
-		const query = client.query(`
-			QUERY F4 F4.1 Charge Nurse admits patient to their division 
-			)
-			`);
-
-		// After all data is returned, close connection and return results
-		query.on('end', () => {
-			done();
-			return res.json(results);
-		});
-
-	});
-});
-
-//PATRICK
-/**
- * Request Patient Admission to Division
- */
-router.post('/patient/division/request', (req, res, next) => {
-
-	const results = [];
-
-	pg.connect(connectionString, (err, client, done) => {
-
-		// Handle connection errors
-		if(err) {
-			done();
-			console.log(err);
-			return res.status(500).json({success: false, data: err});
-		}
-
-		const query = client.query(`
-			QUERY F5 Charge Nurses to request a patient admission to a division.
-			`);
-
-		// After all data is returned, close connection and return results
-		query.on('end', () => {
-			done();
-			return res.json(results);
-		});
-
-	});
-});
-
- module.exports = router;
+module.exports = router;

@@ -10,7 +10,7 @@ export class Divisions {
     constructor(router, divisionService){
         this.router = router
         this.divisionService = divisionService
-        this.divisionID = ''
+        this._id = ''
         this.divisions = []
         this.division = null
         this.newDivision = new Division()
@@ -34,7 +34,8 @@ export class Divisions {
 
     createDivision() {
         if (this.newDivision.isValid()) {
-            this.divisionService.createDivision(this.newDivision).then(() => {
+						this.newDivision._id = `${this.newDivision.divisionType} ${this.newDivision._id}`
+            this.divisionService.createDivision(this.newDivision).then(division => {
                 this.isDisplayingCreationForm = false
                 this.divisions.push(this.newDivision)
             }).catch(err => {
