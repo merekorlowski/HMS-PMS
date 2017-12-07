@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS HMS_PMS.DivisionRequest (
     LocalDoctorID integer NOT NULL,
     Rationnal text NOT NULL,
     PriorityAssessment character varying NOT NULL,
-    PatientID integer NOT NULL,
+    _id integer NOT NULL,
     ChargeNurseID integer NOT NULL
 );
 
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS HMS_PMS.Nurse (
 );
 
 CREATE TABLE IF NOT EXISTS HMS_PMS.Patient (
-    PatientID character varying NOT NULL,
+    _id character varying NOT NULL,
     Address character varying,
     PhoneNumber integer NOT NULL,
     DateOfBirth date NOT NULL,
@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS HMS_PMS.RoomAdmission (
     PrivateInsurance character varying,
     ChargeNurseID integer NOT NULL,
     BedNumber integer NOT NULL,
-    PatientID character varying NOT NULL,
+    _id character varying NOT NULL,
     LocalDoctorID integer NOT NULL
 );
 
@@ -200,7 +200,7 @@ ALTER TABLE ONLY HMS_PMS.Nurse
     ADD CONSTRAINT Nurse_pkey PRIMARY KEY (NurseId);
 
 ALTER TABLE ONLY HMS_PMS.Patient
-    ADD CONSTRAINT Patient_pkey PRIMARY KEY (PatientID);
+    ADD CONSTRAINT Patient_pkey PRIMARY KEY (_id);
 
 ALTER TABLE ONLY HMS_PMS.PersonnalOfficer
     ADD CONSTRAINT PersonnalOfficer_pkey PRIMARY KEY (PersonnalOfficerID);
@@ -281,7 +281,7 @@ ALTER TABLE ONLY HMS_PMS.RoomAdmission
     ADD CONSTRAINT RoomAdmission_LocalDoctorID_fkey FOREIGN KEY (LocalDoctorID) REFERENCES HMS_PMS.LocalDoctor(LocalDoctorID);
 
 ALTER TABLE ONLY HMS_PMS.RoomAdmission
-    ADD CONSTRAINT RoomAdmission_PatientID_fkey FOREIGN KEY (PatientID) REFERENCES HMS_PMS.Patient(PatientID);
+    ADD CONSTRAINT RoomAdmission_PatientID_fkey FOREIGN KEY (_id) REFERENCES HMS_PMS.Patient(_id);
 
 ALTER TABLE ONLY HMS_PMS.Shift
     ADD CONSTRAINT Shift_DivisionID_fkey FOREIGN KEY (DivisionID) REFERENCES HMS_PMS.Division(DivisionID);
