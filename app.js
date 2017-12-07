@@ -18,10 +18,26 @@ const medicalSupply = require('./routes/medicalSupply')
 const app = express()
 
 // set up database
-const pg = require('pg');
-const connectionString = /*process.env.DATABASE_URL ||*/ config.dbUrl;
-const client = new pg.Client(connectionString);
-client.connect();
+// const pg = require('pg');
+// const connectionString = /*process.env.DATABASE_URL ||*/ config.dbUrl;
+// const client = new pg.Client(connectionString);
+// client.connect();
+
+const mongoose = require('mongoose')
+
+mongoose.connect(config.dbUrl)
+
+mongoose.connection.on('connected', () => {  
+	console.log(`Mongoose default connection is open to ${config.dbUrl}`);
+})
+
+mongoose.connection.on('error', (err) => {
+	console.log(`Mongoose default connection has occured ${err} error.`)
+})
+
+mongoose.connection.on('disconnected', () => {
+	console.log('Mongoose default connection is disconnected')
+})
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
