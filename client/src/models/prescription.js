@@ -6,23 +6,19 @@ export class Prescription {
         } else {
             this.drugNumber = ''
             this.drugName = ''
-            this.unitsByDay = 0
-            this.numAdministrationPerDay = 0
-            this.methodOfAdministration = ''
-            this.administrations = [{
-                timeOfDay: '',
-                numUnits: 0
-            }]
+            this.unitsByDay = 1
+            this.administrationsPerDay = 1
+            this.methodOfAdministration = 'Oral'
             this.startDate = ''
             this.endDate = ''
-        }
-    }
-
-    // get isStartDateBfEndDate(){
-    //     return this.startDate.getDay() <this.endDate.getDay() &&
-    //         this.startDate.getFullYear() < this.endDate.getFullYear() &&
-    //         this.startDate.getMonth() < this.endDate.getMonth()
-    // }
+				}
+				
+				this.changed = {}
+		}
+		
+		hasChanged(attribute) {
+			this.changed[attribute] = true
+		}
 
     get isEndDateValid() {
         return this.endDate != ''
@@ -44,23 +40,18 @@ export class Prescription {
         return this.unitsByDay != 0
     }
 
-    get isNumAdministrationPerDayValid() {
-        return this.numAdministrationPerDay != 0
+    get isAdministrationsPerDayValid() {
+        return this.administrationsPerDay != 0
     }
-
-    get isAdministrationsValid() {
-        return this.administrations != null
-    }
+		
     isValid() {
         return (
             this.isEndDateValid &&
-            this.isStartDateBfEndDate &&
             this.isStartDateValid &&
             this.isDrugNumberValid &&
             this.isDrugNameValid &&
             this.isUnitsByDayValid &&
-            this.isNumAdministrationPerDayeValid &&
-            this.isAministrationsValid
+						this.isAdministrationsPerDayValid
         )
     }
 }
