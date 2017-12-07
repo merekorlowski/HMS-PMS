@@ -2,7 +2,7 @@
  * Created by os on 12/3/2017.
  */
 import {inject} from 'aurelia-framework'
-import {HttpClient} from 'aurelia-fetch-client'
+import {HttpClient, json} from 'aurelia-fetch-client'
 import {Division} from '../models/division'
 import {config} from '../config'
 
@@ -11,21 +11,30 @@ export class DivisionService {
         this.http = new HttpClient().configure(config => {
             config.withBaseUrl(config.baseUrl);
         })
-        this.tempDivision = new Division()
-        this.tempDivision.divisionID= "123456"
-        this.tempDivision.location = "Bloc B"
-        this.tempDivision.name = "Urology"
-        this.tempDivision.numOfBeds = 300
-        this.tempDivision.telephoneExtension = "6587"
+    }
 
+    getDivision(divisionID){
+        return this.http.fetch(`/division?divisionID=${divisionID}`).then(response => response.json()).then(data => {
+            return new Division(data)
+        })
     }
 
     getDivisions() {
-        return this.http.fetch('/divisions').then(response => response.json())
+        return this.http.fetch('/divisions').then(response => response.json()).then(data => {
+            console.log(data)
+            return data.map(division => new Division(division))
+        })
     }
 
     consult(divisionID) {
         return this.http.fetch(`/division?divisionID=${divisionID}`).then(response => response.json())
+    }
+
+    createDivision(division) {
+        return this.http.fetch('/division', {
+            method: 'post',
+            body: json(division)
+        }).then(response => response.json())
     }
 
 }

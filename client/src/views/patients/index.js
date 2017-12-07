@@ -13,9 +13,9 @@ export class Patients {
         this.patients = []
         this.patient = null
         this.newPatient = new Patient()
-        this.isDisplayingRegistrationForm = false
         this.step = 1
         this.getPatients()
+        this.isDisplayingRegistrationForm = false
     }
 
     getPatients() {

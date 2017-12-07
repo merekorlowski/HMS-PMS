@@ -1,0 +1,10 @@
+#divisionCreationForm {
+	width: 700px;
+	margin: 100px auto;
+}
+
+#displayCreationFormBtn {
+    position: fixed;
+    right: 50px;
+    bottom: 100px;
+}
