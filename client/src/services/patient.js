@@ -2,6 +2,7 @@ import {inject} from 'aurelia-framework'
 import {HttpClient, json} from 'aurelia-fetch-client'
 import {Patient} from '../models/patient'
 import {config} from '../config'
+import { Prescription } from '../models/prescription';
 
 export class PatientService {
     constructor() {
@@ -10,9 +11,9 @@ export class PatientService {
         })
 		}
 		
-		getPatient(patientID) {
-			return this.http.fetch(`/patient?patientID=${patientID}`).then(response => response.json()).then(data => {
-				return data.map(patient => new Patient(patient))
+		getPatient(_id) {
+			return this.http.fetch(`/patient?_id=${_id}`).then(response => response.json()).then(data => {
+				return new Patient(data)
 			})
 		}
 
@@ -36,8 +37,8 @@ export class PatientService {
 			}).then(response => response.json())
 		}
 
-    consult(patientID) {
-        return this.http.fetch(`/patient?patientID=${patientID}`).then(response => response.json())
+    consult(_id) {
+        return this.http.fetch(`/patient?_id=${_id}`).then(response => response.json())
     }
 
     admitPatient(patient, admissionInfo) {
@@ -48,10 +49,26 @@ export class PatientService {
                 admissionInfo: json(admissionInfo)
             }
         }).then(response => response.json())
-    }
+		}
 
-    isAdmitted(patientID) {
-        return this.http.fetch(`/patient/room-admission?patientID=${patientID}`).then(response => response.json())
+		getPrescriptions(_id) {
+			return this.http.fetch(`/prescriptions?_id=${_id}`)
+				.then(response => response.json())
+				.then(data => data.map(prescription => new Prescription(prescription)))
+		}
+		
+		addPrescription(_id, prescription) {
+				return this.http.fetch('/prescription', {
+					method: 'post',
+					body: json({
+						_id: _id,
+						prescription: prescription
+					})
+				}).then(response => response.json())
+		}
+
+    isAdmitted(_id) {
+        return this.http.fetch(`/patient/room-admission?_id=${_id}`).then(response => response.json())
     }
 
 }
